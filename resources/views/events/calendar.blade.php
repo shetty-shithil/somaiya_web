@@ -2,36 +2,88 @@
 {{-- @include('inc.messages') --}}
 
 @section('content')
-@if(count($events)>0) 
+{{-- {{$prev_m}}
+{{$next_m}}
+{{$lw}} --}}
+{{-- @if(count($events)>0)  --}}
     {{-- @foreach($events->all() as $e) --}}
-        <p>{{$events[0]}}</p>
+        {{-- <p>{{$events[0]}}</p> --}}
     {{-- @endforeach --}}
-@endif    
+{{-- @endif     --}}
 {{-- {{$evs}} --}}
     <div class="calendar">
         <div class="calendar-container">
-            <div id="calendar-month">
-                <div class="list month-list">
-                    <i class="fas fa-chevron-left col s3" id="prev"></i>
+                
+         <div class="row col m4 s12 m-0 p-0" id="monthYear">
+                    @if($m==12)
+                    <a href={{"?month=$h&year=$n"}}><i class="fas fa-chevron-left" id="prev"></i></a>
+                {{-- <p id="month" class="col m8 "></p> --}}
+                <h5 id="abc">{{date("F Y",$j)}}</h5> 
+                <a href={{"?month=$k&year=$u"}}><i class="fas fa-chevron-right col" id="next"></i></a>                    
+            @elseif($m==1)
+                    <a href={{"?month=$h&year=$s"}}><i class="fas fa-chevron-left" id="prev"></i></a>
+                {{-- <p id="month" class="col m8 "></p> --}}
+                <h5 id="abc">{{date("F Y",$j)}}</h5> 
+                {{-- <input type="hidden" id="abc" name="abc" value="Monday"> --}}
+                <a href={{"?month=$k&year=$n"}}><i class="fas fa-chevron-right col" id="next"></i></a>
+            @else
+                        <a href={{"?month=$h&year=$n"}}><i class="fas fa-chevron-left" id="prev"></i></a>
+                    {{-- <p id="month" class="col m8 "></p> --}}
+                    <h5 id="abc">{{date("F Y",$j)}}</h5>
+                    <a href={{"?month=$k&year=$n"}}><i class="fas fa-chevron-right col" id="next"></i></a>
+             
+            @endif  
+                    {{-- <i class="fas fa-chevron-left col s3" id="prev"></i>
                     <p id="month" class="col s6"></p>
-                    <i class="fas fa-chevron-right col s3" id="next"></i>
-                </div>
-            </div>
+                    <i class="fas fa-chevron-right col s3" id="next"></i> --}}
+        </div>
+            {{-- {{$prev_m}}
+            {{$next_m}} --}}
             <div class="calendar-days">
-                <div>Sun</div>
                 <div>Mon</div>
                 <div>Tue</div>
                 <div>Wed</div>
                 <div>Thur</div>
                 <div>Fri</div>
                 <div>Sat</div>
+                <div>Sun</div>
             </div>
-
+            {{-- {{count($arr1)}} --}}
+            {{-- {{Carbon::now()}} --}}
+            {{-- {{$prev_m}}
+            {{$lw}} --}}
             <ul id="calendar-date" class="date-list">
-
+                @for ($b = ($prev_m-$lw)+1; $b <=$prev_m ; $b++)
+                <li class="extra-date">{{$b}}</li>
+                @endfor
+               
+              @for ($i = 0; $i < $d; $i++)
+                <li class="date" date-day="{{$i+1}}" date-month="{{date("m", strtotime(date("F",$j)))}}" date-year="{{date("Y",$j)}}">
+                    <span class="dateEl">{{$i+1}}
+                        @foreach ($arr1 as $a)
+                            @if ($i+1==date("j",strtotime($a->date))) 
+                              <small>{{$a->event_id}}</small>
+                             @endif
+                        @endforeach
+                    </span>
+                </li>
+              @endfor
+              {{-- @for ($z =1 ; $z <=4 ; $z++)
+              <li class="extra-date">{{$z}}</li>
+              @endfor --}}
+              {{-- {{date("m",strtotime(date("F",strtotime($a->date))))}} --}}
             </ul>
+            {{-- {{date("F",strtotime($a->date))}} --}}
         </div>
     </div>
+    {{-- @foreach ($arr1 as $a)
+     
+        @if (date("j",strtotime($a->date)) == '9')
+            hello
+        @endif
+
+       
+    @endforeach  --}}
 
     <!-- <div class="event-container">
     <div class="events visible">

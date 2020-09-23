@@ -244,11 +244,11 @@ foreach($request->stake_holder as $stake_holder){
         if($start_time>$end_time){
             return redirect('/events/create')->with('errort','The start time and end time entries are invalid')->withInput();
         }
-        $venue_id=$request->venue_list[0][0];
+        $venue_id=$request->venue_list[0];
         for ($b=0; $b<count($days); $b++) {
             foreach($evsc as $evs){
                 $eve=Events::find($evs->event_id);
-                if($evs->date==$days[$b] and $evs->start_time==$start_time and $evs->venue_id==$request->venue_list[0][0]){
+                if($evs->date==$days[$b] and $evs->start_time==$start_time and $evs->venue_id==$request->venue_list[0]){
                     $venue=Venue::find( $evs->venue_id);
                     $vname=$venue->name;
                     return redirect('/events/create')->with('errort',"Time slots for the venue $vname mentioned date aren't available.")->withInput();
@@ -277,8 +277,8 @@ foreach($request->stake_holder as $stake_holder){
             }
             foreach($evsc as $evs){    
                 $eve=Events::find($evs->event_id);
-                $request->venue_list[0][0];
-                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[0][0]){
+                $request->venue_list[0];
+                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[0]){
                     $venue=Venue::find( $evs->venue_id);
                     $vname=$venue->name;
                     return redirect('/events/create')->with('errort',"Mentioned Time slots for the venue $vname aren't available.")->withInput();
@@ -298,7 +298,7 @@ foreach($request->stake_holder as $stake_holder){
         }
         $evsc=event_schedule::all();
         for ($j=0; $j<count($request->start_dates); $j++){
-            for($k=0; $k<count($request->venue_list[$j]); $k++){
+            // for($k=0; $k<count($request->venue_list[$j]); $k++){
              $d=date('Y-m-d',strtotime ($request->start_dates[$j]));
              $a=date('H:i:s', strtotime($request->start_times[$j]));
              $b=date('H:i:s', strtotime($request->end_times[$j]));
@@ -308,8 +308,8 @@ foreach($request->stake_holder as $stake_holder){
             }
              foreach($evsc as $evs){    
                 $eve=Events::find($evs->event_id);
-                $request->venue_list[$j][$k];
-                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[$j][$k]){
+                $request->venue_list[$j];
+                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[$j]){
                     $venue=Venue::find( $evs->venue_id);
                     $vname=$venue->name;
                     return redirect('/events/create')->with('errort',"Mentioned Time slots for the venue $vname aren't available.")->withInput();
@@ -321,7 +321,7 @@ foreach($request->stake_holder as $stake_holder){
                 }
         }
                  
-            }
+            // }
         }
     }
     elseif($request->v==1 and $request->t==0){
@@ -330,7 +330,7 @@ foreach($request->stake_holder as $stake_holder){
         }
         $evsc=event_schedule::all();
         for ($j=0; $j<count($request->start_dates); $j++){
-            for($k=0; $k<count($request->venue_list[$j]); $k++){
+            // for($k=0; $k<count($request->venue_list[$j]); $k++){
              $d=date('Y-m-d',strtotime ($request->start_dates[$j]));
              $a=date('H:i:s', strtotime($request->start_times[$j]));
              $b=date('H:i:s', strtotime($request->end_times[$j]));
@@ -340,8 +340,8 @@ foreach($request->stake_holder as $stake_holder){
             }
              foreach($evsc as $evs){    
                 $eve=Events::find($evs->event_id);
-                $request->venue_list[$j][$k];
-                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[$j][$k]){
+                $request->venue_list[$j];
+                if($evs->date==$d and $evs->start_time==$a and $evs->venue_id==$request->venue_list[$j]){
                     $venue=Venue::find( $evs->venue_id);
                     $vname=$venue->name;
                     return redirect('/events/create')->with('errort',"Mentioned Time slots for the venue $vname aren't available.")->withInput();
@@ -353,7 +353,7 @@ foreach($request->stake_holder as $stake_holder){
                 }
         }
                  
-            }
+            // }
         }
     }
     
@@ -452,7 +452,7 @@ foreach($request->stake_holder as $stake_holder){
                     $evs->date=date('Y-m-d',strtotime ($d) );
                     $evs->start_time=date('H:i:s', strtotime($a));
                     $evs->end_time=date('H:i:s', strtotime($b));
-                    $evs->venue_id=$request->venue_list[0][0];
+                    $evs->venue_id=$request->venue_list[0];
                     $evs->save();
                
            }
@@ -460,25 +460,25 @@ foreach($request->stake_holder as $stake_holder){
      elseif($request->v==1 and $request->t==1){
            
            for ($j=0; $j<count($request->start_dates); $j++){
-               for($k=0; $k<count($request->venue_list[$j]); $k++){
+            //    for($k=0; $k<count($request->venue_list[$j]); $k++){
                 $d=$request->start_dates[$j];
                 $a=$request->start_times[$j];
                 $b=$request->end_times[$j];
-                print_r($request->venue_list[$j][$k]);
+                print_r($request->venue_list[$j]);
                     $evs=new event_schedule;
                     $evs->event_id=$event->id;
                     $evs->date=date('Y-m-d',strtotime ($d) );
                     $evs->start_time=date('H:i:s', strtotime($a));
                     $evs->end_time=date('H:i:s', strtotime($b));
-                    $evs->venue_id=$request->venue_list[$j][$k];
+                    $evs->venue_id=$request->venue_list[$j];
                     $evs->save();
-               }
+            //    }
            } 
      }         
     elseif($request->v==1 and $request->t==0){
     
     for ($j=0; $j<count($request->start_dates); $j++){
-        for($k=0; $k<count($request->venue_list[$j]); $k++){
+        // for($k=0; $k<count($request->venue_list[$j]); $k++){
             $d=$request->start_dates[$j];
             $a=$request->start_times[$j];
             $b=$request->end_times[$j];
@@ -487,9 +487,9 @@ foreach($request->stake_holder as $stake_holder){
                 $evs->date=date('Y-m-d',strtotime ($d) );
                 $evs->start_time=date('H:i:s', strtotime($a));
                 $evs->end_time=date('H:i:s', strtotime($b));
-                $evs->venue_id=$request->venue_list[$j][$k];
+                $evs->venue_id=$request->venue_list[$j];
                 $evs->save();
-        }
+        // }
     }
     }
         $evp=new Event_Permissions;

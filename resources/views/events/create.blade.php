@@ -456,7 +456,7 @@ function singledate_venue(i) {
                         <div class="col mycol"></div>
                         <div class="venue">
                         <div class="input-field col s12 m2 l2">
-                            <select multiple name="venue_list[]" class="venue${i}" id="select_venue">
+                            <select name="venue_list[]" class="venue${i}" id="select_venue">
                                 <option value="" disabled>Select</option>
                             </select>
                             <label>Venue</label>
