@@ -54,36 +54,30 @@
             {{$lw}} --}}
             <ul id="calendar-date" class="date-list">
                 @for ($b = ($prev_m-$lw)+1; $b <=$prev_m ; $b++)
-                <li class="extra-date">{{$b}}</li>
+                 <li class="extra-date">{{$b}}</li>
                 @endfor
                
-              @for ($i = 0; $i < $d; $i++)
-                <li class="date" date-day="{{$i+1}}" date-month="{{date("m", strtotime(date("F",$j)))}}" date-year="{{date("Y",$j)}}">
-                    <span class="dateEl">{{$i+1}}
-                        @foreach ($arr1 as $a)
-                            @if ($i+1==date("j",strtotime($a->date))) 
-                              <small>{{$a->event_id}}</small>
-                             @endif
-                        @endforeach
-                    </span>
-                </li>
-              @endfor
-              {{-- @for ($z =1 ; $z <=4 ; $z++)
-              <li class="extra-date">{{$z}}</li>
-              @endfor --}}
-              {{-- {{date("m",strtotime(date("F",strtotime($a->date))))}} --}}
+                @for ($i = 0; $i < $d; $i++)
+                    <li class="date" date-day="{{$i+1}}" date-month="{{date("m", strtotime(date("F",$j)))}}" date-year="{{date("Y",$j)}}">
+                        <span class="dateEl">{{$i+1}}
+                            @foreach ($arr1 as $a)
+                                @if ($i+1==date("j",strtotime($a->date))) 
+                                <small>{{$a->event_id}}</small>
+                                @endif
+                            @endforeach
+                        </span>
+                    </li>
+                @endfor
+
+                @for ($p=1 ; $p <=42-($lw+$d) ; $p++)
+                    <li class="extra-date">{{$p}}</li>
+                @endfor 
+              {{-- {{date("m",strtotime(date("F",strtotime($a->date))))}}
             </ul>
             {{-- {{date("F",strtotime($a->date))}} --}}
         </div>
     </div>
-    {{-- @foreach ($arr1 as $a)
-     
-        @if (date("j",strtotime($a->date)) == '9')
-            hello
-        @endif
-
-       
-    @endforeach  --}}
+  
 
     <!-- <div class="event-container">
     <div class="events visible">

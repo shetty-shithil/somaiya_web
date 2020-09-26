@@ -122,7 +122,7 @@ Route::get('/', function (Request $request) {
     foreach($evs as $e){
         $f=strtotime($e->date);
         // echo(date("m", strtotime(date("F",$f))));
-        if($m==date("m", strtotime(date("F",$f)))){
+        if($m==date("m", strtotime(date("F",$f))) and ($n==date("Y", strtotime(date("F",$f))))){
             $arr1=array_merge($arr1,array($e));
         }
         // echo($e->date);
@@ -168,12 +168,12 @@ Route::get('/', function (Request $request) {
         $o=Carbon::now()->year($n)->month($m-1)->day($prev_m)->toDateTimeString();
         $p=Carbon::parse($o);
         $lw=$p->dayOfWeek;
-        $var1=$p->englishDayOfWeek;
-        echo $var1;
-        echo $lw;
-        echo $o;
-        echo $p;
-        echo "Else";
+        // $var1=$p->englishDayOfWeek;
+        // echo $var1;
+        // echo $lw;
+        // echo $o;
+        // echo $p;
+        // echo "Else";
     }
 //    echo $lw;
 
@@ -203,3 +203,6 @@ Route::get('schedules','EventsController@eventschedules');
 // Route::post('schedules','EventsController@eventschedules');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/permission', 'EventsController@permission');
+    

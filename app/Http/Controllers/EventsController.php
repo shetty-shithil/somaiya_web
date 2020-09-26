@@ -520,7 +520,100 @@ public function messages()
         ];
     }
 
+    public function permission(Request $request)
+    {
+        $m=$request->month;
+        $n=$request->year;
+        if($m and $n){
 
+            // $q=$n+1;
+            // echo $q;
+            $o=($n."-0".$m."-01"); 
+            if(strlen($m)==2){
+                $o=($n."-".$m."-01");
+            } 
+            
+            $j=strtotime($o);
+            
+        }
+        // print_r($m);
+        $u=$n+1;
+        $s=$n-1;
+        // echo "From Backend";
+        $events= Events::all();
+        $event_schedules= event_schedule::all();
+        $z=0;
+        $arr=[];
+        if(!$m){
+            $m=Carbon::now()->toDateTimeString();
+            // echo $m;
+            // echo "in if";
+            $j=strtotime($m);
+            // echo $j;
+            $month=date("F",$j);
+            // echo $month;
+            $n=date("Y",$j);
+            // echo $year;
+            $nmonth = date("m", strtotime($month));
+            // echo $nmonth;
+            $m= $nmonth;
+        }
+        foreach($event_schedules as $evs)
+        {   
+            
+            // $d = date_parse_from_format("m", $evs->date);
+            $time=strtotime($evs->date);
+            // print_r($evs);
+            $year=date("Y",$time);
+            // echo $year;
+            // echo "Hi";
+            $month=date("F",$time);
+            // echo $month;
+            $nmonth = date("m", strtotime($month));
+            // echo $nmonth;
+             if($nmonth==$m and $n==$year){
+                $arr=array_merge($arr,array($z=>$evs));
+            }
+            $z++;
+            // echo $j;
+            if(!$j){
+                // echo "j loop";
+               $j=$time; 
+            //    $p=Carbon::create()->day(1)->month(10);
+            //    $j=strtotime($p);
+            //    $s  = DateTime::createFromFormat('!m', $m);
+            //     $b=$s->format('F');
+            //     echo $b;
+            // $j=strtotime($m);
+            // $month=date("F",$j);
+            // $nmonth = date("m", strtotime($month));
+            // $m= $nmonth;
+            }
+        }
+        // echo $nmonth;
+        // print_r($arr);
+        $stake_holders= stake_holders::all();
+        $venues= Venue::all();
+        
+        if($m==12){
+            $h=$m-1;
+            $k='1';
+            
+        }
+        else if($m==1){
+            $h='12';
+            $k=$m+1;
+            
+        }
+        else{
+            $k=$m+'1';
+            $h=$m-'1';
+        }
+        // echo $j;
+        // echo "Value of j.";
+        return view('events.permission',compact('m','n','u','s','j','h','k','events','arr','stake_holders','venues'));
+
+    }
     /**
      * Display the specified resource.
      *
