@@ -88,7 +88,7 @@
 {{-- <div>
         @yield('content')
 </div> --}}
-
+    {{$events}}
 
 
 
