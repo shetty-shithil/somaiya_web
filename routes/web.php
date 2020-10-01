@@ -183,11 +183,19 @@ Route::resource('events','EventsController');
 // Route::get('/events/create', 'EventsController@create');
 // Route::post('/events/create', 'EventsController@store');
 // Route::post('/events','EventsController@store');
+Route::post('/approval','EventsController@approval');
+Route::post('/comments','EventsController@comments');
+
 
 Auth::routes();
 Route::get('register', 'UsersController@showRegistrationForm')->name('register');
 Route::post('register', 'UsersController@register');
 // Route::post('events/{params}','EventsController@store');
+Route::group(['middleware' => ['auth', 'admin']], function() {
+    // your routes
+    Route::get('/permission', 'EventsController@permission');
+
+});
 
 Route::get('/venues','EventsController@venues');
 Route::get('/eventst','EventsController@eventst');
@@ -204,5 +212,4 @@ Route::get('schedules','EventsController@eventschedules');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/permission', 'EventsController@permission');
     

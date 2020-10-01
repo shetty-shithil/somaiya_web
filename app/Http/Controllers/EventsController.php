@@ -434,7 +434,7 @@ foreach($request->stake_holder as $stake_holder){
                 $evs->end_time= date('H:i:s', strtotime($c));
                 
                 
-                $evs->venue_id=$request->venue_list[0][0];
+                $evs->venue_id=$request->venue_list[0];
                 $evs->save();
                 
             }
@@ -511,7 +511,49 @@ foreach($request->stake_holder as $stake_holder){
     // return Redirect::to('/events')->with(['type' => 'success','message' => 'Page redirected!']);
  
 }  
-   
+
+public function approval(Request $request){
+    // $events=Events::find($request->id);
+    // $events->name;
+    // $evp=Event_Permissions::find($request->event_id);
+    // $evp->permit_p='1';
+    // $evp->save();
+    if(auth()->user()->email=='shithil.s@somaiya.edu'){
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
+
+    }
+    else if(auth()->user()->email=='xyz@g.com'){
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
+
+    }
+    else{
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
+
+    }
+
+    return redirect('/permission');
+    
+}
+
+
+public function comments(Request $request){
+    $comm=$request->comments;
+    if(auth()->user()->email=='shithil.s@somaiya.edu'){
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
+
+    }
+    else if(auth()->user()->email=='xyz@g.com'){
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
+
+    }
+    else{
+        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
+
+    }
+
+    return redirect('/permission')->with('comm',$comm);
+}
+
 public function messages()
     {
         return [
@@ -609,9 +651,10 @@ public function messages()
             $k=$m+'1';
             $h=$m-'1';
         }
+        $comm='';
         // echo $j;
         // echo "Value of j.";
-        return view('events.permission',compact('m','n','u','s','j','h','k','events','arr','stake_holders','venues'));
+        return view('events.permission',compact('m','n','u','s','j','h','k','events','arr','stake_holders','venues','comm'));
 
     }
     /**
