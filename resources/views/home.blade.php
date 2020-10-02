@@ -3,7 +3,7 @@
 
 @section('content')
 
-    {{$events}}
+    {{-- {{$u_events}} --}}
 
 
 <div class="container">
@@ -90,129 +90,37 @@
 <div id="MyEvents">
     <div class="container" style="padding: 50px 0;">
         <!-- Events -->
-        <div class="card-head">
-            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
-                    <div class="col s12 m-0 p-0 offset-m2">
-                        <div class="card-panel black-text event m-0">
-                            <div class="valign-wrapper">
-                                <div class="row m-0">
-                                    <div class="col m3 s12 p-0 card-date">
-                                        <h6 class="bold">Saturday September 04</h6>
-                                    </div>
-                                    <div>
-                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
-                                    </div>
-                                    <div>
-                                        <div class="col m7 p-0 m-0">
-                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
+      @foreach ($u_events as $uv)
+      @foreach ($arr as $evs)
+            @if ($evs->event_id==$uv->id)
+                        <div class="card-head">
+                            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
+                                    <div class="col s12 m-0 p-0 offset-m2">
+                                        <div class="card-panel black-text event m-0">
+                                            <div class="valign-wrapper">
+                                                <div class="row m-0">
+                                                    <div class="col m3 s12 p-0 card-date">
+                                                        <h6 class="bold">Saturday September 04</h6>
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
+                                                    </div>
+                                                    <div>
+                                                        <div class="col m7 p-0 m-0">
+                                                            <h6 class="bold mt-0">Seminar Details</h6>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
-                    <div class="col s12 m-0 p-0 offset-m2">
-                        <div class="card-panel black-text event m-0">
-                            <div class="valign-wrapper">
-                                <div class="row m-0">
-                                    <div class="col m3 s12 p-0 card-date">
-                                        <h6 class="bold">Saturday September 04</h6>
-                                    </div>
-                                    <div>
-                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
-                                    </div>
-                                    <div>
-                                        <div class="col m7 p-0 m-0">
-                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
-                    <div class="col s12 m-0 p-0 offset-m2">
-                        <div class="card-panel black-text event m-0">
-                            <div class="valign-wrapper">
-                                <div class="row m-0">
-                                    <div class="col m3 s12 p-0 card-date">
-                                        <h6 class="bold">Saturday September 04</h6>
-                                    </div>
-                                    <div>
-                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
-                                    </div>
-                                    <div>
-                                        <div class="col m7 p-0 m-0">
-                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
-                    <div class="col s12 m-0 p-0 offset-m2">
-                        <div class="card-panel black-text event m-0">
-                            <div class="valign-wrapper">
-                                <div class="row m-0">
-                                    <div class="col m3 s12 p-0 card-date">
-                                        <h6 class="bold">Saturday September 04</h6>
-                                    </div>
-                                    <div>
-                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
-                                    </div>
-                                    <div>
-                                        <div class="col m7 p-0 m-0">
-                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
-                    <div class="col s12 m-0 p-0 offset-m2">
-                        <div class="card-panel black-text event m-0">
-                            <div class="valign-wrapper">
-                                <div class="row m-0">
-                                    <div class="col m3 s12 p-0 card-date">
-                                        <h6 class="bold">Saturday September 04</h6>
-                                    </div>
-                                    <div>
-                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
-                                    </div>
-                                    <div>
-                                        <div class="col m7 p-0 m-0">
-                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-
-        </div>
+                @endif   
+         @endforeach 
+      @endforeach    
     </div>
 </div>
 

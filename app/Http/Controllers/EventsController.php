@@ -10,7 +10,7 @@ use App\Event_Stake_Holders;
 use App\Venue;
 use App\stake_holders;
 use App\Event_Permissions;
-use App\Users;
+use App\User;
 use App\event_schedule;
 use App\Comments;
 use Carbon\Carbon;
