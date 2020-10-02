@@ -12,6 +12,7 @@ use App\stake_holders;
 use App\Event_Permissions;
 use App\Users;
 use App\event_schedule;
+use App\Comments;
 use Carbon\Carbon;
 use DB;
 
@@ -498,6 +499,10 @@ foreach($request->stake_holder as $stake_holder){
         $evp->permit_vp='0';
         $evp->permit_p='0';
         $evp->save();
+
+        $com=new Comments;
+        $com->event_id=$event->id;
+        $com->save();
     // print_r($request->v);
     // print_r($request->t);
   }
@@ -540,18 +545,18 @@ public function comments(Request $request){
     $comm=$request->comments;
     if(auth()->user()->email=='shithil.s@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
-
+        Comments::where(['event_id'=> $request->event_id])->update(['comments_p' => $request->comments]);
     }
     else if(auth()->user()->email=='xyz@g.com'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
-
+        Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
     }
     else{
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
-
+        Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
     }
 
-    return redirect('/permission')->with('comm',$comm);
+    return redirect('/permission');
 }
 
 public function messages()
@@ -651,7 +656,7 @@ public function messages()
             $k=$m+'1';
             $h=$m-'1';
         }
-        $comm='';
+        $comm=Comments::all();
         // echo $j;
         // echo "Value of j.";
         return view('events.permission',compact('m','n','u','s','j','h','k','events','arr','stake_holders','venues','comm'));

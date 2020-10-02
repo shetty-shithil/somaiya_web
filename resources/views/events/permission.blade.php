@@ -37,79 +37,104 @@
         </div>
         
 
-        <!-- Events -->
         @foreach ($events as $eve)
         {{-- @foreach ($stake_holders as $stkh) --}}
         {{-- {{$m}} --}}
-         @foreach ($arr as $evs)
+        @foreach ($arr as $evs)
+            @if ($evs->event_id==$eve->id)
+            <div id="fullcard_with_comments" class="modal">
+                <div class="modal-content">
+                    <div class="row ml-28 m-0">
+                        <div class="col m8 s12">
+                            <h6 class="bold">{{date('l', strtotime($evs->date))}}</h6>
+                            <h6 class="bold">{{date('F \ j  ', strtotime($evs->date))}}</h6>
+                            <h6 class="bold"> {{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
+                            <h6 class="bold mt-0">{{$eve->title}}</h6>
+                            <p> {{$eve->description}} </p>
+                            <div class="row m-0 p-0">
+                                <div class="col m6 pr-20 s12">
+                                    <span class="bold">Venue :</span> @foreach ($venues as $venue)
+                                    @if ($venue->id==$evs->venue_id)
+                                            <span class="bold-sm">Venue :</span> {{$venue->name}}   
+                                    @endif
+                               @endforeach 
+                                </div>
+                                <div>
+                                    <span class="bold">Speaker :</span> {{$eve->speakers}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col m6 pr-20 s12">
+                                    <span class="bold">Organiser :</span> {{$eve->department}}
+                                </div>
+                                <div>
+                                    @foreach ($stake_holders as $stkh)
+                                    @if ($stkh->id==$eve->stake_holder_id)
+                                         <span class="bold">Stakeholder :</span> {{$stkh->name}}
+                                    @endif
+                                    @endforeach 
+                                </div>
+                            </div>
+                            <form action="/comments" method="POST">
+                                <div class="input-field col m4" style="width: 95%; margin-bottom: 0px;">
+                                    <textarea id="textarea1" name="comments" class="materialize-textarea"></textarea>
+                                    <label for="textarea1" class="comments">Comments</label>                   
+                                        @csrf
+                                        <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">    
+                                        <input type="hidden" id="approval" name="approval" value="2">    
+                                        <button class="btn col m4 s5  mar-15 btn-modify modal-close">Send</button>                                                   
+                                </div>
+                        </form>
+                        </div>
+                        <div class="col m4 s12">
+                            <h5 class="bold top-0">Comments</h5>
+                            <div class="view_comments">
+                                <div class="comment_1">
+                                    <span class="faculty" id="pass_id">Dean Of Academics: </span> 
+                                    @foreach ($comm as $c)
+                                        @if($c->event_id==$eve->id)
+                                            {{$c->comments_doa}}
+                                        @endif    
+                                    @endforeach
+                                    {{-- <input class="form-control" name="name" type="text"
+                                                               id="pass_id"> --}}
+                                </div>
+                                <div class="comment_2">
+                                    <span class="faculty">Vice-Principal: </span> 
+                                    @foreach ($comm as $c)
+                                        @if($c->event_id==$eve->id)
+                                            {{$c->comments_vp}}
+                                        @endif         
+                                    @endforeach
+                                </div>
+                                <div class="comment_3">
+                                    <span class="faculty">PRINCIPAL: </span>
+                                    @foreach ($comm as $c)
+                                    @if($c->event_id==$eve->id)
+                                        {{$c->comments_p}}
+                                    @endif        
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        @endforeach
+        @endforeach    
+        <!-- Events -->
+    @foreach ($events as $eve)
+        {{-- @foreach ($stake_holders as $stkh) --}}
+        {{-- {{$m}} --}}
+        @foreach ($arr as $evs)
             @if ($evs->event_id==$eve->id)
             
             <div class="card-head">
                 <div class="row">
                     <div class="col s12 m-0 p-0 offset-m2">
                         <div class="card-panel black-text event m-0">
-             <!-- Modal-->  <div id="fullcard_with_comments" class="modal">
-                                <div class="modal-content">
-                                    <div class="row ml-28 m-0">
-                                        <div class="col m8 s12">
-                                            <h6 class="bold">{{date('l', strtotime($evs->date))}}</h6>
-                                            <h6 class="bold">{{date('F \ j  ', strtotime($evs->date))}}</h6>
-                                            <h6 class="bold"> {{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
-                                            <h6 class="bold mt-0">{{$eve->title}}</h6>
-                                            <p> {{$eve->description}} </p>
-                                            <div class="row m-0 p-0">
-                                                <div class="col m6 pr-20 s12">
-                                                    <span class="bold">Venue :</span> @foreach ($venues as $venue)
-                                                    @if ($venue->id==$evs->venue_id)
-                                                            <span class="bold-sm">Venue :</span> {{$venue->name}}   
-                                                    @endif
-                                               @endforeach 
-                                                </div>
-                                                <div>
-                                                    <span class="bold">Speaker :</span> {{$eve->speakers}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col m6 pr-20 s12">
-                                                    <span class="bold">Organiser :</span> {{$eve->department}}
-                                                </div>
-                                                <div>
-                                                    @foreach ($stake_holders as $stkh)
-                                                    @if ($stkh->id==$eve->stake_holder_id)
-                                                         <span class="bold">Stakeholder :</span> {{$stkh->name}}
-                                                    @endif
-                                                    @endforeach 
-                                                </div>
-                                            </div>
-                                            <form action="/comments" method="POST">
-                                                <div class="input-field col m4" style="width: 95%; margin-bottom: 0px;">
-                                                    <textarea id="textarea1" name="comments" class="materialize-textarea"></textarea>
-                                                    <label for="textarea1" class="comments">Comments</label>                   
-                                                        @csrf
-                                                        <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">    
-                                                        <input type="hidden" id="approval" name="approval" value="2">    
-                                                        <button class="btn col m4 s5  mar-15 btn-modify modal-close">Send</button>                                                   
-                                                </div>
-                                        </form>
-                                        </div>
-                                        <div class="col m4 s12">
-                                            <h5 class="bold top-0">Comments</h5>
-                                            <div class="view_comments">
-                                                <div class="comment_1">
-                                                    <span class="faculty">HOD: </span> Please change the date
-                                                </div>
-                                                <div class="comment_2">
-                                                    <span class="faculty">DOA: </span> 
-                                                    {{$comm}}
-                                                </div>
-                                                <div class="comment_3">
-                                                    <span class="faculty">PRINCIPAL: </span> Please change the name.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+             <!-- Modal-->  
                             <div class="valign-wrapper">
                                 <div class="row m-0">
                                     <div class="col m2 s12 p-0 card-date" style="transform: translateY(62%);">
@@ -167,7 +192,12 @@
                                                                 <input type="hidden" id="approval" name="approval" value="1">
                                                             <button class="btn waves-effect waves-light col m2 s6 offset-s3 mar-15" name="aproval" type="submit" value="1">Approve</button>
                                                         </form>
-                                                    <button data-target="fullcard_with_comments" class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0">Modify</button>
+                                                        @foreach ($comm as $c)
+                                                        @if ($c->event_id==$eve->id)
+                                                            {{$c->comments_vp}}    
+                                                        @endif
+                                                        @endforeach
+                                                    <button data-target="fullcard_with_comments" data-toggle="modal"   class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0">Modify</button>
                                                         <form action="/approval" method="POST">
                                                             @csrf
                                                                 <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">
@@ -191,7 +221,7 @@
             </div>   
             @endif
             
-            @endforeach          
+        @endforeach          
         {{-- @endforeach     --}}
     @endforeach   
 
@@ -211,6 +241,10 @@
 
     $(document).ready(function() {
             $('.modal').modal();
+            // $("#fullcard_with_comments").on("click", function (e) {
+            //         var id = $(e.relatedTarget).data('target-id');
+            //         $('#pass_id').val(id);
+            //     });
         });
 
 

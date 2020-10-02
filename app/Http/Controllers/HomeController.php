@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_id = auth() ->user()->id;
+        $user_id = auth()->user()->id;
         $user = User::find($user_id);
         return view('home')->with('events',$user->events);
     }
