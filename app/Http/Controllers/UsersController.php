@@ -29,7 +29,7 @@ class UsersController extends Controller
     protected function showRegistrationForm(){
         $designation =['0'=>'Principal', '1' => 'Vice Principal', '2' => 'Dean Of Academics','3' => 'HOD'];
         $department =['Computer'=> 'Computer', 'IT' => 'IT', 'EXTC' => 'EXTC','ETRX' => 'ETRX'];
-        $admin =['0' => 'Yes', '1' => 'No'];
+        $admin =['0' => 'No', '1' => 'Yes'];
         return view('auth.register',compact('designation','department','admin'));
     }  
 

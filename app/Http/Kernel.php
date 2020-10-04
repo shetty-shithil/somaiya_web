@@ -1,5 +1,38 @@
 <?php
+#If event has the same stakeholder, we will be creating a single card for multiple dates.
+#If an event is accepted, we must be able to see his approval.
+#If principal has approved an event, it won't be displayed in permission page.
+#The date of modification must be displayed in dashboard.
+#Approval of an event by an authority must be displayed distinctly on the dashboard.
+#Approval must be indicated using a checkbox.
 
+#Modal Functionality: Dynamic modal data
+#MODAL USED IN HOME, PERMISSION AND DASHBOARD PAGES.
+
+#FRONTEND:
+#LOGIN PAGE, SIGN IN PAGE CSS, DASHBOARD PAGE.
+#PERMISSION PAGE'S ROUTING IN NAVIGATION BAR.
+#RESET PASSWORD, FORGET PASSWORD, VERIFY PASSWORD.
+#HOME PAGE CSS.
+#FILE-UPLOAD CSS AND PAGE.
+#MODAL.
+
+#BACKEND:
+#RESET PASSWORD FORGET PASSWORD, VERIFY PASSWORD.
+#FILE UPLOAD AND DOWNLOAD.
+#VALIDATION.
+#EMAIL SERVICE.
+#CRON JOB (AUTOMATED EMAIL SENDING).
+
+#DIFFICULT TASK:
+#FILE UPLOAD AND DOWNLOAD.
+#VALIDATION.
+#EMAIL SERVICE.
+#CRON JOB (AUTOMATED EMAIL SENDING).
+#Modal Functionality: Dynamic modal data
+
+#HIERARCHY OF APPROVAL, DISPLAYING THE EVENTS ACCORDINGLY, RIGHTS ALLOTED TO EACH AUTHORITY.
+#EMAIL SERVICES (FOR FILE UPLOAD REMINDER).
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;

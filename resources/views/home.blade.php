@@ -1,4 +1,3 @@
-{{-- @extends('layouts.app') --}}
 @extends('inc.navbar')
 
 @section('content')
@@ -16,12 +15,12 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                       <button> <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-
+                       </button>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -94,21 +93,35 @@
       @foreach ($arr as $evs)
             @if ($evs->event_id==$uv->id)
                         <div class="card-head">
+                            
                             <div class="row"><a class="modal-trigger" href="#fullcard_with_comments">
                                     <div class="col s12 m-0 p-0 offset-m2">
                                         <div class="card-panel black-text event m-0">
                                             <div class="valign-wrapper">
+                                                @foreach ($u_per as $u_p)
+                                                    @if ($u_p->event_id==$uv->id)
+                                                        @if($u_p->permit_p==0)
+                                                            <p>Pending</p>
+                                                        @elseif($u_p->permit_p==1)   
+                                                            <p>Accepted</p>
+                                                        @elseif($u_p->permit_p==2)    
+                                                            <p>Modify</p>
+                                                        @else   
+                                                            <p>Rejected</p>
+                                                        @endif   
+                                                    @endif
+                                                @endforeach
                                                 <div class="row m-0">
                                                     <div class="col m3 s12 p-0 card-date">
-                                                        <h6 class="bold">Saturday September 04</h6>
+                                                        <h6 class="bold">{{date('l', strtotime($evs->date))}} {{date('F \ j  ', strtotime($evs->date))}}</h6>
                                                     </div>
                                                     <div>
-                                                        <h5 class="col m2 p-0 m-0"> 11:00 - 12:00</h5>
+                                                        <h6 class="col m2 p-0 m-0"> {{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
                                                     </div>
                                                     <div>
                                                         <div class="col m7 p-0 m-0">
-                                                            <h6 class="bold mt-0">Seminar Details</h6>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet,</p>
+                                                            <h6 class="bold mt-0">{{$uv->title}}</h6>
+                                                            <p>{{$uv->description}}</p>
                                                         </div>
                                                     </div>
                                                 </div>

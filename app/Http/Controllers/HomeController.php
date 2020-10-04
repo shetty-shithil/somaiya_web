@@ -62,8 +62,9 @@ class HomeController extends Controller
         $stake_holders= stake_holders::all();
         $venues= Venue::all();
         $u_events=$user->events;
+        $u_per=Event_Permissions::all();
         // return view('home')->with('events',$user->events);
-        return view('home',compact('events','u_events','arr','stake_holders','venues'));
+        return view('home',compact('events','u_events','u_per','arr','stake_holders','venues'));
 
     }
 }

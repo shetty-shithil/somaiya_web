@@ -37,92 +37,76 @@
         </div>
         
 
-        @foreach ($events as $eve)
-        {{-- @foreach ($stake_holders as $stkh) --}}
-        {{-- {{$m}} --}}
-        @foreach ($arr as $evs)
-            @if ($evs->event_id==$eve->id)
+      
             <div id="fullcard_with_comments" class="modal">
                 <div class="modal-content">
                     <div class="row ml-28 m-0">
                         <div class="col m8 s12">
-                            <h6 class="bold">{{date('l', strtotime($evs->date))}}</h6>
-                            <h6 class="bold">{{date('F \ j  ', strtotime($evs->date))}}</h6>
-                            <h6 class="bold"> {{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
-                            <h6 class="bold mt-0">{{$eve->title}}</h6>
-                            <p> {{$eve->description}} </p>
+                            <h6 class="bold" id="day_on_modal"></h6>
+                            <h6 class="bold" id="date_on_modal"></h6>
+                            <h6 class="bold" id="time_on_modal"> </h6>
+                            <h6 class="bold mt-0" id="title_on_modal"></h6>
+                            <p id="description_on_modal"></p>
                             <div class="row m-0 p-0">
                                 <div class="col m6 pr-20 s12">
-                                    <span class="bold">Venue :</span> @foreach ($venues as $venue)
-                                    @if ($venue->id==$evs->venue_id)
-                                            <span class="bold-sm">Venue :</span> {{$venue->name}}   
-                                    @endif
-                               @endforeach 
+                                    <span class="bold">Venue :</span><span id="venue_on_modal"></span> 
                                 </div>
                                 <div>
-                                    <span class="bold">Speaker :</span> {{$eve->speakers}}
+                                    <span class="bold">Speaker :</span><span id="speaker_on_modal"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col m6 pr-20 s12">
-                                    <span class="bold">Organiser :</span> {{$eve->department}}
+                                    <span class="bold">Organiser :</span><span id="organiser_on_modal"></span>
                                 </div>
                                 <div>
-                                    @foreach ($stake_holders as $stkh)
-                                    @if ($stkh->id==$eve->stake_holder_id)
-                                         <span class="bold">Stakeholder :</span> {{$stkh->name}}
-                                    @endif
-                                    @endforeach 
+                                         <span class="bold">Stakeholder :</span><span id="stakeholder_on_modal"></span>
                                 </div>
                             </div>
-                            <form action="/comments" method="POST">
+                            {{-- <form action="/comments" method="POST">
                                 <div class="input-field col m4" style="width: 95%; margin-bottom: 0px;">
                                     <textarea id="textarea1" name="comments" class="materialize-textarea"></textarea>
                                     <label for="textarea1" class="comments">Comments</label>                   
                                         @csrf
-                                        <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">    
-                                        <input type="hidden" id="approval" name="approval" value="2">    
+                                        {{-- <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">     --}}
+                                        {{-- <input type="hidden" id="approval" name="approval" value="2">    
                                         <button class="btn col m4 s5  mar-15 btn-modify modal-close">Send</button>                                                   
-                                </div>
-                        </form>
+                                </div> --}}
+                        {{-- </form> --}} 
                         </div>
                         <div class="col m4 s12">
                             <h5 class="bold top-0">Comments</h5>
                             <div class="view_comments">
                                 <div class="comment_1">
                                     <span class="faculty" id="pass_id">Dean Of Academics: </span> 
-                                    @foreach ($comm as $c)
+                                    {{-- @foreach ($comm as $c)
                                         @if($c->event_id==$eve->id)
                                             {{$c->comments_doa}}
                                         @endif    
-                                    @endforeach
-                                    {{-- <input class="form-control" name="name" type="text"
-                                                               id="pass_id"> --}}
+                                    @endforeach --}}
+                      
                                 </div>
                                 <div class="comment_2">
                                     <span class="faculty">Vice-Principal: </span> 
-                                    @foreach ($comm as $c)
+                                    {{-- @foreach ($comm as $c)
                                         @if($c->event_id==$eve->id)
                                             {{$c->comments_vp}}
                                         @endif         
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                                 <div class="comment_3">
                                     <span class="faculty">PRINCIPAL: </span>
-                                    @foreach ($comm as $c)
+                                    {{-- @foreach ($comm as $c)
                                     @if($c->event_id==$eve->id)
                                         {{$c->comments_p}}
                                     @endif        
-                                @endforeach
+                                @endforeach --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
-        @endforeach
-        @endforeach    
+            </div>   
         <!-- Events -->
     @foreach ($events as $eve)
         {{-- @foreach ($stake_holders as $stkh) --}}
@@ -138,38 +122,38 @@
                             <div class="valign-wrapper">
                                 <div class="row m-0">
                                     <div class="col m2 s12 p-0 card-date" style="transform: translateY(62%);">
-                                        <h6 class="bold">{{date('l', strtotime($evs->date))}}</h6>
-                                        <h6 class="bold">{{date('F \ j  ', strtotime($evs->date))}}</h6>
+                                        <h6 class="bold" id="day_on_card{{$eve->id}}">{{date('l', strtotime($evs->date))}}</h6>
+                                        <h6 class="bold" id="date_on_card{{$eve->id}}">{{date('F \ j  ', strtotime($evs->date))}}</h6>
                                         {{-- <h6 class="bold">{{date('F Y', strtotime($evs->date))}}</h6> --}}
                                         {{-- <h6 class="bold">{{date('l jS \of F Y', strtotime($evs->date))}}</h6> --}}
 
                                     </div>
                                     <div>
-                                        <h6 class="col m2 p-0 m-0" style="line-height:160px;">{{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
+                                        <h6 class="col m2 p-0 m-0" id="time_on_card{{$eve->id}}" style="line-height:160px;">{{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
                                     </div>
                                     <div>
                                         <div class="col m8 p-0 m-0">
-                                            <h6 class="bold mt-0">{{$eve->title}}</h6>
-                                            <p>{{$eve->description}}
+                                            <h6 class="bold mt-0" id="title_on_card{{$eve->id}}">{{$eve->title}}</h6>
+                                            <p id="description_on_card{{$eve->id}}">{{$eve->description}}
                                             </p>
                                             <div class="row m-0">
                                                 <div class="col m6 s12 pr-20">
                                                    @foreach ($venues as $venue)
                                                         @if ($venue->id==$evs->venue_id)
-                                                                <span class="bold-sm">Venue :</span> {{$venue->name}}   
+                                                <span class="bold-sm">Venue :</span><span id="venue_on_card{{$eve->id}}">{{$venue->name}}  </span>  
                                                         @endif
                                                    @endforeach 
                                                 </div>
                                                 <div class="col m6 pad-20">
-                                                    <span class="bold-sm">Speaker :</span> {{$eve->speakers}}
+                                                    <span class="bold-sm">Speaker :</span><span id="speaker_on_card{{$eve->id}}"> {{$eve->speakers}}  </span>  
                                                 </div>
                                                 <div class="col m6 s12 pr-20">
-                                                    <span class="bold-sm">Organiser :</span> {{$eve->department}}
+                                                    <span class="bold-sm">Organiser :</span><span id="organiser_on_card{{$eve->id}}">  {{$eve->department}}  </span>  
                                                 </div>
                                                 <div class="col m6 s12 pad-20">
                                                     @foreach ($stake_holders as $stkh)
                                                         @if ($stkh->id==$eve->stake_holder_id)
-                                                                <span class="bold-sm">Stakeholder :</span>{{$stkh->name}}
+                                                                <span class="bold-sm">Stakeholder :</span><span id="stakeholder_on_card{{$eve->id}}">  {{$stkh->name}}</span> 
                                                         @endif
                                                      @endforeach 
                                                     
@@ -197,7 +181,7 @@
                                                             {{$c->comments_vp}}    
                                                         @endif
                                                         @endforeach
-                                                    <button data-target="fullcard_with_comments" data-toggle="modal"   class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0">Modify</button>
+                                                    <button data-target="fullcard_with_comments" class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0 btn_modify" id={{$eve->id}}>Modify</button>
                                                         <form action="/approval" method="POST">
                                                             @csrf
                                                                 <input type="hidden" id="id" name="event_id" value="{{$eve->id}}">
@@ -237,14 +221,23 @@
         var instances = M.Sidenav.init(elems, {
             draggable: true,
         });
+        $('.btn_modify').click(function() {
+            var id_no = this.id;
+            document.getElementById("day_on_modal").innerHTML = document.getElementById("day_on_card" + id_no).innerHTML;
+            document.getElementById("date_on_modal").innerHTML = document.getElementById("date_on_card" + id_no).innerHTML;
+            document.getElementById("time_on_modal").innerHTML = document.getElementById("time_on_card" + id_no).innerHTML;
+            document.getElementById("title_on_modal").innerHTML = document.getElementById("title_on_card" + id_no).innerHTML;
+            document.getElementById("description_on_modal").innerHTML = document.getElementById("description_on_card" + id_no).innerHTML;
+            document.getElementById("venue_on_modal").innerHTML = document.getElementById("venue_on_card" + id_no).innerHTML;
+            document.getElementById("speaker_on_modal").innerHTML = document.getElementById("speaker_on_card" + id_no).innerHTML;
+            document.getElementById("organiser_on_modal").innerHTML = document.getElementById("organiser_on_card" + id_no).innerHTML;
+            document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
+        });
     });
 
     $(document).ready(function() {
             $('.modal').modal();
-            // $("#fullcard_with_comments").on("click", function (e) {
-            //         var id = $(e.relatedTarget).data('target-id');
-            //         $('#pass_id').val(id);
-            //     });
+         
         });
 
 

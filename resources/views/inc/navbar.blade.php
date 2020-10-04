@@ -45,9 +45,10 @@
         <li><a href="/">HOME</a></li>
         <li><a href="/events">EVENTS</a></li>
         <li><a href="/events/create">CREATE</a></li>
-        <li><a href="#">MY EVENTS</a></li>
+        <li><a href="{{ route('login') }}">MY EVENTS</a></li>
         <li><a href="#">PROFILE</a></li>
-        <li><a href="#">LOGOUT</a></li>
+        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">LOGOUT</a></li>
     </ul>
     <div id="slide-out" class="sidenav">
         <ul>
@@ -57,7 +58,7 @@
                     <a href="#designation"><span class="white-text designation"><i class="fas fa-map-marker-alt"></i>Designation</span></a>
                 </div>
             </li>
-            <li><a href="#">MY EVENTS</a></li>
+            <li><a href="{{ route('login') }}">MY EVENTS</a></li>
             <li><a href="#">PROFILE</a></li>
         </ul>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

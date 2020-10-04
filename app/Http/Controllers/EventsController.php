@@ -523,15 +523,15 @@ public function approval(Request $request){
     // $evp=Event_Permissions::find($request->event_id);
     // $evp->permit_p='1';
     // $evp->save();
-    if(auth()->user()->email=='shithil.s@somaiya.edu'){
+    if(auth()->user()->email=='principal@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
 
     }
-    else if(auth()->user()->email=='xyz@g.com'){
+    else if(auth()->user()->email=='viceprincipal@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
 
     }
-    else{
+    else if(auth()->user()->email=='doa@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
 
     }
