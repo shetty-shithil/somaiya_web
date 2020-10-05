@@ -187,7 +187,7 @@ Route::post('/approval','EventsController@approval');
 Route::post('/comments','EventsController@comments');
 
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 Route::get('register', 'UsersController@showRegistrationForm')->name('register');
 Route::post('register', 'UsersController@register');
 // Route::post('events/{params}','EventsController@store');
