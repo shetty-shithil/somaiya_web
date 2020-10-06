@@ -15,7 +15,7 @@ use App\event_schedule;
 use App\Comments;
 use Carbon\Carbon;
 use DB;
-
+use App\Mail\SendMail;
 
 // $a=$_POST['start_dates'];
 //         $b=$_POST['end_dates'];
@@ -527,8 +527,19 @@ public function approval(Request $request){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
 
     }
-    else if(auth()->user()->email=='viceprincipal@somaiya.edu'){
+    else if(auth()->user()->email=='shithil.s@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
+        $events=Events::find($request->event_id);
+        $user=User::find($events->user_id);
+        // echo $user->email;
+
+        $details=[
+            'title'=>'Title: Mail From Shithil Shetty',
+            'body'=>'Body: This is to inform you that the event request has been approved',
+        ];
+
+        \Mail::to($user->email)->send(new SendMail($details));
+        return view('emails.thanks');
 
     }
     else if(auth()->user()->email=='doa@somaiya.edu'){
@@ -536,18 +547,18 @@ public function approval(Request $request){
 
     }
 
-    return redirect('/permission');
+    // return redirect('/permission');
     
 }
 
 
 public function comments(Request $request){
     $comm=$request->comments;
-    if(auth()->user()->email=='shithil.s@somaiya.edu'){
+    if(auth()->user()->email=='principal@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
         Comments::where(['event_id'=> $request->event_id])->update(['comments_p' => $request->comments]);
     }
-    else if(auth()->user()->email=='xyz@g.com'){
+    else if(auth()->user()->email=='shithil.s@somaiya.edu'){
         Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
         Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
     }
