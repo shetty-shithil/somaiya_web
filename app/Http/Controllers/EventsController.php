@@ -500,9 +500,9 @@ foreach($request->stake_holder as $stake_holder){
         $evp->permit_p='0';
         $evp->save();
 
-        $com=new Comments;
-        $com->event_id=$event->id;
-        $com->save();
+        // $com=new Comments;
+        // $com->event_id=$event->id;
+        // $com->save();
     // print_r($request->v);
     // print_r($request->t);
   }
@@ -554,18 +554,36 @@ public function approval(Request $request){
 
 public function comments(Request $request){
     $comm=$request->comments;
+    // echo $request->event_id;
+    $comments=new Comments;
+    $comments->event_id=$request->event_id;
     if(auth()->user()->email=='principal@somaiya.edu'){
-        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
-        Comments::where(['event_id'=> $request->event_id])->update(['comments_p' => $request->comments]);
-    }
+        $comments->user='0';
+        }
     else if(auth()->user()->email=='shithil.s@somaiya.edu'){
-        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
-        Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
-    }
+        $comments->user= '1';
+        }
     else{
-        Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
-        Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
-    }
+        $comments->user='2'; 
+        }
+    $comments->comments=$comm;    
+    $comments->save();
+    // if(auth()->user()->email=='shithil.s@somaiya.edu'){
+    //     echo 1;
+    // }
+        // echo  $comments->user;
+    // if(auth()->user()->email=='principal@somaiya.edu'){
+    //     Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_p' => $request->approval]);
+    //     Comments::where(['event_id'=> $request->event_id])->update(['comments_p' => $request->comments]);
+    // }
+    // else if(auth()->user()->email=='shithil.s@somaiya.edu'){
+    //     Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_vp' => $request->approval]);
+    //     Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
+    // }
+    // else{
+    //     Event_Permissions::where(['event_id'=> $request->event_id])->update(['permit_doa' => $request->approval]);
+    //     Comments::where(['event_id'=> $request->event_id])->update(['comments_vp' => $request->comments]);
+    // }
 
     return redirect('/permission');
 }

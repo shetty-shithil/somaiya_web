@@ -100,16 +100,41 @@
                                             <div class="valign-wrapper">
                                                 @foreach ($u_per as $u_p)
                                                     @if ($u_p->event_id==$uv->id)
-                                                        @if($u_p->permit_p==0)
-                                                            <p>Pending</p>
+                                                   <div> 
+                                            Principal: @if($u_p->permit_p==0)
+                                                            <p>Pending</p><br>
                                                         @elseif($u_p->permit_p==1)   
-                                                            <p>Accepted</p>
+                                                            <p>Accepted</p><br>
                                                         @elseif($u_p->permit_p==2)    
                                                             <p>Modify</p>
                                                         @else   
+                                                            <p>Rejected</p><br>
+                                                        @endif 
+                                            </div>    
+                                       <div>
+                                           Vice-Principal: @if($u_p->permit_vp==0)
+                                                            <p>Pending</p><br>
+                                                        @elseif($u_p->permit_vp==1)   
+                                                            <p>Accepted</p>
+                                                        @elseif($u_p->permit_vp==2)    
+                                                            <p>Modify</p>
+                                                        @else   
                                                             <p>Rejected</p>
-                                                        @endif   
-                                                    @endif
+                                                        @endif 
+                                                    </div>                 
+                                        
+                                                    <div>
+                                                    Dean Of Academics: @if($u_p->permit_doa==0)
+                                                    <p>Pending</p>
+                                                @elseif($u_p->permit_doa==1)   
+                                                    <p>Accepted</p>
+                                                @elseif($u_p->permit_doa==2)    
+                                                    <p>Modify</p>
+                                                @else   
+                                                    <p>Rejected</p>
+                                                @endif 
+                                                    </div>
+                                            @endif
                                                 @endforeach
                                                 <div class="row m-0">
                                                     <div class="col m3 s12 p-0 card-date">

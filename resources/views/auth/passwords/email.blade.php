@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+{{-- First page which appears after clicking reset. --}}
+@extends('inc.navbar')
 
 @section('content')
 <div class="container">

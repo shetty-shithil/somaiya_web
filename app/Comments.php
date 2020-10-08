@@ -11,7 +11,7 @@ class Comments extends Model
     public $primaryKey='id';
     public $timestamps=true;
     protected $fillable=[
-    'comments_p','comments_vp','comments_doa',
+        'event_id','user','comments',
     ];
 
 }

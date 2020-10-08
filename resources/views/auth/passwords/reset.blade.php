@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+{{-- Page for completing the password reset process. --}}
+@extends('inc.navbar')
 
 @section('content')
 <div class="container">
