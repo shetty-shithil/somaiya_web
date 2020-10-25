@@ -81,6 +81,13 @@
                     <input type="hidden" id="send_on_modal" name="event_id">     
                     <button class="btn col m4 s5  mar-15 btn-modify modal-close">Modify</button>
                 </form>
+                <form action="/events/fileupload" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <input type="hidden" id="file_on_modal" name="event_id"> 
+                    <label for="uploadedfile">Upload Report</label>
+                    <input type="file" class="form-control-file" id="uploadedfile" name="uploadedfile">     
+                    <div class="form-control-group"><button class="btn btn-success">Submit</button></div>
+                </form>
             </div>
             <div class="col m4 s12">
                 <h5 class="bold top-0">Comments</h5>
@@ -310,6 +317,7 @@
             document.getElementById("organiser_on_modal").innerHTML = document.getElementById("organiser_on_card" + id_no).innerHTML;
             document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
             document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
+            document.getElementById("file_on_modal").value = $("#id_on_card" + id_no).val();
 
         });
 

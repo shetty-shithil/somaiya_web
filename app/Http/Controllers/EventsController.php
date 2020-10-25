@@ -13,6 +13,7 @@ use App\Event_Permissions;
 use App\User;
 use App\event_schedule;
 use App\Comments;
+use App\Fileupload;
 use Carbon\Carbon;
 use DB;
 use App\Mail\SendMail;
@@ -773,7 +774,7 @@ public function messages()
        
         // print_r($request->event_id);
         
-    Events::where(['id'=> $request->event_id])->update(['title' => $request->title,'description'=> $request->description,'department' => $request->department,'title' => $request->title,'speakers' => $request->speaker,'type' => $request->type,'certificate' => $request->certificate, 'fees' => $request->fees,'user_id' => $request->user_id,'slots' => count($request->start_dates),'company_name' => $request->company_name,'stake_holder_id' => $request->stake_holder_id ]);
+    Events::where(['id'=> $request->event_id])->update(['title' => $request->title,'description'=> $request->description,'user_id' =>$request->user_id, 'department' => $request->department,'title' => $request->title,'speakers' => $request->speaker,'type' => $request->type,'certificate' => $request->certificate, 'fees' => $request->fees,'user_id' => $request->user_id,'slots' => count($request->start_dates),'company_name' => $request->company_name,'stake_holder_id' => $request->stake_holder[0] ]);
     DB::table('event_scheduleS')->where('event_id',$request->event_id)->delete();
                 
     for ($j=0; $j<count($request->start_dates); $j++){
@@ -836,6 +837,22 @@ public function messages()
             // }
     }
 
+    public function fileupload(Request $request)
+    {
+        $file= $request->file('uploadedfile');
+        $filename= $file->getClientOriginalName();
+        $filename= time(). '.' .$filename. '.' .auth()->user()->name;
+
+        $path = $file->storeAs('public', $filename);
+        // echo request->event_id;
+
+        Fileupload::create([
+            'filename' => $filename,
+            'event_id' => $request->event_id,
+        ]);
+            $savedfile = Fileupload::latest()->firstOrFail();
+        return redirect('/home')->with('savedfile', $savedfile);
+    }
     /**
      * Remove the specified resource from storage.
      *

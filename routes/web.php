@@ -187,6 +187,7 @@ Route::post('/approval','EventsController@approval');
 Route::post('/comments','EventsController@comments');
 Route::post('/events/edit','EventsController@edit');
 Route::post('/events/update','EventsController@update');
+Route::post('/events/fileupload','EventsController@fileupload');
 
 
 Auth::routes(['verify'=>true]);
