@@ -13,7 +13,7 @@
                         <div class="input-field col s12">
                             {{-- <input id="department" type="text" class="validate"> --}}
                             <label for="department">Enter Department</label>
-                            {{Form::text('department', '',['class'=>"form-control",'id'=>'department'])}}        
+                            {{Form::text('department', '', ['class'=>"form-control",'id'=>'department'])}}        
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('department')}}</div>
                             
                         </div>

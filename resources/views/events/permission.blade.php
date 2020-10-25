@@ -123,7 +123,7 @@
                             <div class="valign-wrapper">
                                 <div class="row m-0">
                                     <div class="col m2 s12 p-0 card-date" style="transform: translateY(62%);">
-                                        {{$evs->id}}
+                                        {{-- {{$evs->id}} --}}
 
                                         <h6 class="bold" id="day_on_card{{$evs->id}}">{{date('l', strtotime($evs->date))}}</h6>
                                         <h6 class="bold" id="date_on_card{{$evs->id}}">{{date('F \ j  ', strtotime($evs->date))}}</h6>

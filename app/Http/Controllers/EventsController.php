@@ -59,6 +59,7 @@ class EventsController extends Controller
         $u=$n+1;
         $s=$n-1;
         // echo "From Backend";
+        // $events= Events::orderBy('id','desc')->paginate();
         $events= Events::all();
         $event_schedules= event_schedule::all();
         $z=0;
@@ -145,7 +146,8 @@ class EventsController extends Controller
         $certificate =['0'=>'Yes', '1' => 'No', '2' => 'Not Decided'];
         $type = ['0' => 'Workshops', '1' => 'Competitions', '2' => 'Conferences','3'=>'Fun Events','4'=>'STTP','5'=>'FDP','6'=>'Orientation Program'];
         // $user_id=auth()->user()->id;
-        return view('events.create',compact('venue','stake_holder','certificate','type'));
+        $pqr='abcd';
+        return view('events.create',compact('venue','stake_holder','certificate','type','pqr'));
     }
 
     /**
@@ -708,9 +710,54 @@ public function messages()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)//Replaced the id argument with request
     {
-        //
+        // $venue = \DB::table('venues')->pluck('name','id');
+        $venue=Venue::all();
+        $stake_holder = \DB::table('stake_holders')->pluck('name','id');
+        $certificate =['0'=>'Yes', '1' => 'No', '2' => 'Not Decided'];
+        $type = ['0' => 'Workshops', '1' => 'Competitions', '2' => 'Conferences','3'=>'Fun Events','4'=>'STTP','5'=>'FDP','6'=>'Orientation Program'];
+        $events=Events::find($request->event_id);
+        $event_schedules=DB::table('event_scheduleS')->where('event_id',$request->event_id)->get();
+        // $evsend=[];
+        // $z=0;
+        //[[date:val,start:val],[date:val,start:val]]
+        // foreach($event_schedules as $evs){
+        //     if($evs->event_id==$request->event_id){
+        //         // $evsend=array_add($evs);
+        //         $evsend=array_merge($evsend, array($z => $evs));
+        //         $z++;
+        //     }
+        // }
+
+        // echo gettype($venue);
+        // $venue = json_decode(json_encode($venue), true);
+        // print_r($venue);
+        return view('events.edit',compact('events','venue','stake_holder','certificate','type','event_schedules'));
+        // echo date('M j, Y',strtotime($event_schedules[0]->date));
+        // print_r($event_schedules[0]->start_time);
+    //     $z=0;
+    //     $dat=[];
+    //     $start=[];
+    //     $end=[];
+    //     $vid=[];
+    //  foreach($event_schedules as $evs){
+    // //     foreach($event_schedules->date as $d){
+    //         if($evs->event_id==$request->event_id){
+    //         $dat=array_merge($dat, array($z => $evs->date));
+    //         $start=array_merge($start, array($z => $evs->start_time));
+    //         $end=array_merge($end, array($z => $evs->end_time));
+    //         $vid=array_merge($end, array($z => $evs->end_time));
+    //         $z++;
+    //         //  echo $evs->date ."\xA";
+               
+    //         }
+    //     }
+        
+    // }
+    //     print_r($dat);
+    //     print_r($start);
+    //     print_r($end);
     }
 
     /**
@@ -720,9 +767,73 @@ public function messages()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)//Removed the id argument present along with request
     {
-        //
+        // print_r($request->start_dates[1]);
+       
+        // print_r($request->event_id);
+        
+    Events::where(['id'=> $request->event_id])->update(['title' => $request->title,'description'=> $request->description,'department' => $request->department,'title' => $request->title,'speakers' => $request->speaker,'type' => $request->type,'certificate' => $request->certificate, 'fees' => $request->fees,'user_id' => $request->user_id,'slots' => count($request->start_dates),'company_name' => $request->company_name,'stake_holder_id' => $request->stake_holder_id ]);
+    DB::table('event_scheduleS')->where('event_id',$request->event_id)->delete();
+                
+    for ($j=0; $j<count($request->start_dates); $j++){
+        // for($k=0; $k<count($request->venue_list[$j]); $k++){
+            $d=$request->start_dates[$j];
+            $a=$request->start_times[$j];
+            $b=$request->end_times[$j];
+                $evs=new event_schedule;
+                $evs->event_id=$request->event_id;
+                $evs->date=date('Y-m-d',strtotime ($d) );
+                $evs->start_time=date('H:i:s', strtotime($a));
+                $evs->end_time=date('H:i:s', strtotime($b));
+                $evs->venue_id=$request->venue_list[$j];
+                $evs->save();
+        // }
+    }
+    
+        $evp=new Event_Permissions;
+        $evp->event_id=$request->event_id;
+        $evp->permit_doa='0';
+        $evp->permit_vp='0';
+        $evp->permit_p='0';
+        $evp->save();
+
+         return redirect('/home')->with('success','Event Modified');
+            // print_r($request->event_id);
+
+            // $event->title=$request->title;
+            // $event->description=$request->description;
+            // $event->department=$request->department;
+            // $event->speakers=$request->speaker;
+            // $event->type=$request->type;
+            // $event->certificate=$request->certificate;
+            // $event->fees=$request->fees;
+            // $event->user_id=$request->user_id;
+            // $event->slots=count($request->start_dates);
+            // $event->company_name=$request->company_name;
+            // $event->stake_holder_id=$stake_holder;//Associative Array
+            // $event->save();
+            // $validator=Validator::make($data, [
+            //     'department'=>['required','string','max:180'],
+            //     'title' => ['required', 'string', 'max:180'],
+            //     'description' => ['required', 'string','max:500'],
+            //     'speaker' => ['required', 'string'],
+            //     'type' =>['required'],
+            //     'company_name'=>['required'],
+            //     'certificate' => ['required'],
+            //     'fees' => ['required','int'],
+            //     'stake_holder' => ['required'],
+            //     'start_dates'=>['required'],
+            //     'start_times'=>['required'],
+            //     'end_times'=>['required'],
+            //     'venue_list'=>['required'],
+            // ]);
+                     
+            // if ($validator->fails()) {
+            //     return redirect('/events/create')
+            //                 ->withErrors($validator)
+            //                 ->withInput();                
+            // }
     }
 
     /**

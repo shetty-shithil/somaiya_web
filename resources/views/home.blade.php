@@ -1,7 +1,7 @@
 @extends('inc.navbar')
 
 @section('content')
-
+@include('inc.messages')
     {{-- {{$u_events}} --}}
 
 
@@ -76,7 +76,11 @@
                         <span class="bold">Stakeholder : </span><span id="stakeholder_on_modal"></span>
                     </div>
                 </div>
-                <button class="btn col m4 s5  mar-15 btn-modify modal-close">Modify</button>
+                <form action="/events/edit" method="POST">
+                    @csrf
+                    <input type="hidden" id="send_on_modal" name="event_id">     
+                    <button class="btn col m4 s5  mar-15 btn-modify modal-close">Modify</button>
+                </form>
             </div>
             <div class="col m4 s12">
                 <h5 class="bold top-0">Comments</h5>
@@ -142,47 +146,62 @@
 <div id="MyEvents">
     <div class="container" style="padding: 50px 0;">
         <!-- Events -->
-        <div class="card-head">
-            <div class="row card_to_update_modal" id="1"><a class="modal-trigger" href="#fullcard_with_comments">
-                <div class="col s12 m-0 p-0 offset-m2">
-                    <div class="card-panel black-text event m-0">
-                        <div class="valign-wrapper">
-                            <div class="row m-0">
-                                <div class="col m2 s12 p-0 card-date" style="transform: translateY(62%);">
-                                    <h6 class="bold" id="day_on_card1">Saturday</h6>
-                                    <h6 class="bold" id="date_on_card1">September 04</h6>
-                                </div>
-                                <div>
-                                    <h5 class="col m2 p-0 m-0" style="line-height:160px;" id="time_on_card1"> 11:00 - 12:00</h5>
-                                </div>
-                                <div>
-                                    <div class="col m8 p-0 m-0">
-                                        <h6 class="bold mt-0" id="title_on_card1">Seminar Details</h6>
-                                        <p id="description_on_card1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet, dolorem quia, similique vel quam maxime alias nam. Ea, cumque officia.</p>
-                                        <div class="row m-0" style="display: none;">
-                                            <div class="col m6 s12 pr-20">
-                                                <span class="bold-sm">Venue : </span><span id="venue_on_card1">IT Building</span>
+        @foreach ($u_events as $uv)
+      @foreach ($arr as $evs)
+            @if ($evs->event_id==$uv->id)
+                <div class="card-head">
+                    <div class="row card_to_update_modal" id="{{$evs->id}}"><a class="modal-trigger" href="#fullcard_with_comments">
+                        <div class="col s12 m-0 p-0 offset-m2">
+                            <div class="card-panel black-text event m-0">
+                                <div class="valign-wrapper">
+                                    <div class="row m-0">
+                                        <div class="col m2 s12 p-0 card-date" style="transform: translateY(62%);">
+                                            <input type="hidden" id="id_on_card{{$evs->id}}" name="event_id" value="{{$uv->id}}">
+                                            <h6 class="bold" id="day_on_card{{$evs->id}}">{{date('l', strtotime($evs->date))}}</h6>
+                                            <h6 class="bold" id="date_on_card{{$evs->id}}">{{date('F \ j  ', strtotime($evs->date))}}</h6>
+                                        </div>
+                                        <div>
+                                            <h6 class="col m2 p-0 m-0" style="line-height:160px;" id="time_on_card{{$evs->id}}">{{date("g:i a", strtotime($evs->start_time))}} - {{date("g:i a", strtotime($evs->end_time))}}</h6>
+                                        </div>
+                                        <div>
+                                            <div class="col m8 p-0 m-0">
+                                                <h6 class="bold mt-0" id="title_on_card{{$evs->id}}">{{$uv->title}}</h6>
+                                                <p id="description_on_card{{$evs->id}}">{{$uv->description}}</p>
+                                                <div class="row m-0" style="display: none;">
+                                                    <div class="col m6 s12 pr-20">
+                                                        @foreach ($venues as $venue)
+                                                        @if ($venue->id==$evs->venue_id)
+                                                <span class="bold-sm">Venue :</span><span id="venue_on_card{{$evs->id}}">{{$venue->name}}  </span>  
+                                                        @endif
+                                                   @endforeach                                                     </div>
+                                                    <div class="col m6 pad-20">
+                                                        <span class="bold-sm">Speaker : </span> <span id="speaker_on_card{{$evs->id}}">{{$uv->speakers}}</span>
+                                                    </div>
+                                                    <div class="col m6 s12 pr-20">
+                                                        <span class="bold-sm">Organiser : </span> <span id="organiser_on_card{{$evs->id}}">{{$uv->department}}</span>
+                                                    </div>
+                                                    <div class="col m6 s12 pad-20">
+                                                        @foreach ($stake_holders as $stkh)
+                                                        @if ($stkh->id==$uv->stake_holder_id)
+                                                        <span class="bold-sm">Stakeholder : </span><span id="stakeholder_on_card{{$evs->id}}">{{$stkh->name}}</span>
+                                                        @endif
+                                                        @endforeach 
+                                                       
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col m6 pad-20">
-                                                <span class="bold-sm">Speaker : </span> <span id="speaker_on_card1">XYZ</span>
-                                            </div>
-                                            <div class="col m6 s12 pr-20">
-                                                <span class="bold-sm">Organiser : </span> <span id="organiser_on_card1">XYZ Department</span>
-                                            </div>
-                                            <div class="col m6 s12 pad-20">
-                                                <span class="bold-sm">Stakeholder : </span><span id="stakeholder_on_card1">Teachers</span>
-                                            </div>
+
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
+                        </a>
                     </div>
                 </div>
-                </a>
-            </div>
-        </div>
+        @endif   
+        @endforeach 
+     @endforeach    
     </div>
 </div>
 {{-- <div id="MyEvents">
@@ -277,9 +296,7 @@
    <script src="{{asset('js/abc.js')}}"></script>
    <script src="{{asset('js/extra.js')}}"></script>
    <script>
-    $(document).ready(function() {
-        $('.modal').modal();
-    });
+   
 
     $('.card_to_update_modal').click(function() {
             var id_no = this.id;
@@ -292,8 +309,13 @@
             document.getElementById("speaker_on_modal").innerHTML = document.getElementById("speaker_on_card" + id_no).innerHTML;
             document.getElementById("organiser_on_modal").innerHTML = document.getElementById("organiser_on_card" + id_no).innerHTML;
             document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
+            document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
+
         });
 
+        $(document).ready(function() {
+        $('.modal').modal();
+    });
     </script>
 
 @endsection

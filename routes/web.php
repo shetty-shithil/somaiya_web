@@ -185,6 +185,8 @@ Route::resource('events','EventsController');
 // Route::post('/events','EventsController@store');
 Route::post('/approval','EventsController@approval');
 Route::post('/comments','EventsController@comments');
+Route::post('/events/edit','EventsController@edit');
+Route::post('/events/update','EventsController@update');
 
 
 Auth::routes(['verify'=>true]);
