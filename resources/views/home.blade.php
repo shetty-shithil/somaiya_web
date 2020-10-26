@@ -84,6 +84,7 @@
                 <form action="/events/fileupload" enctype="multipart/form-data" method="POST">
                     @csrf
                     <input type="hidden" id="file_on_modal" name="event_id"> 
+                    <input type="hidden" id="title" name="title"> 
                     <label for="uploadedfile">Upload Report</label>
                     <input type="file" class="form-control-file" id="uploadedfile" name="uploadedfile">     
                     <div class="form-control-group"><button class="btn btn-success">Submit</button></div>
@@ -318,7 +319,7 @@
             document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
             document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
             document.getElementById("file_on_modal").value = $("#id_on_card" + id_no).val();
-
+            document.getElementById("title").value = document.getElementById("title_on_card" + id_no).innerHTML;
         });
 
         $(document).ready(function() {

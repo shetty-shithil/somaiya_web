@@ -838,20 +838,48 @@ public function messages()
     }
 
     public function fileupload(Request $request)
-    {
-        $file= $request->file('uploadedfile');
+    {   
+
+        
+        $filev= $request->all();
+        $validator=Validator::make($filev, [
+            'uploadedfile' => 'required|mimes:pdf|max:2000',
+            ]);
+            if ($validator->fails()) {
+                return redirect('/home')
+                            ->withErrors($validator);
+            }
+            $file= $request->file('uploadedfile');
+            // $data= $request->all();
+            // $validator=Validator::make($data, [
+            //     'uploadedfile' => 'required|mimes:pdf|max:20000',
+            //     ]);
+            //     if ($validator->fails()) {
+            //         return redirect('/home')
+            //                     ->withErrors($validator);
+            //     }
         $filename= $file->getClientOriginalName();
-        $filename= time(). '.' .$filename. '.' .auth()->user()->name;
+        $fileext = $file->getClientOriginalExtension();
+        $filename= time(). '.' .$request->title.'.'.$fileext;
 
         $path = $file->storeAs('public', $filename);
         // echo request->event_id;
-
+                // echo $path;
+                // echo $request->title;
         Fileupload::create([
             'filename' => $filename,
             'event_id' => $request->event_id,
         ]);
             $savedfile = Fileupload::latest()->firstOrFail();
         return redirect('/home')->with('savedfile', $savedfile);
+               
+      //Display File Size
+    //   echo 'File Size: '.$file->getSize(). ' bytes';
+    //   echo '<br>';
+   
+      //Display File Mime Type
+    //   echo 'File Mime Type: '.$file->getMimeType();
+
     }
     /**
      * Remove the specified resource from storage.
