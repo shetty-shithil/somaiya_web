@@ -188,7 +188,7 @@ Route::post('/comments','EventsController@comments');
 Route::post('/events/edit','EventsController@edit');
 Route::post('/events/update','EventsController@update');
 Route::post('/events/fileupload','EventsController@fileupload');
-
+Route::post('/events/download','EventsController@filedownload');
 
 Auth::routes(['verify'=>true]);
 Route::get('register', 'UsersController@showRegistrationForm')->name('register');

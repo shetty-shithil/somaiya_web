@@ -13,7 +13,7 @@ class Fileupload extends Model
     public $timestamps=true; 
 
     protected $fillable=[
-        'event_id', 'filename', 
+        'event_id', 'filename', 'filepath',
     ];
 
     // protected $guarded = [];

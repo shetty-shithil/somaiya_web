@@ -1,7 +1,7 @@
 @if(count($errors)>0)   
     @foreach ($errors->all() as $error)
-        <div class="alert alert-danger sticky" style="color: rgb(141, 7, 7)">
-            {{$error}}
+        <div class="alert alert-danger sticky" style="background-color :rgb(141, 7, 7); color: white">
+            {{$error}}<br>
         </div>
     @endforeach
 @endif  

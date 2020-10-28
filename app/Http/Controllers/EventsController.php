@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use App\Events;
 use App\Event_Stake_Holders;
 use App\Venue;
@@ -801,40 +802,6 @@ public function messages()
 
          return redirect('/home')->with('success','Event Modified');
             // print_r($request->event_id);
-
-            // $event->title=$request->title;
-            // $event->description=$request->description;
-            // $event->department=$request->department;
-            // $event->speakers=$request->speaker;
-            // $event->type=$request->type;
-            // $event->certificate=$request->certificate;
-            // $event->fees=$request->fees;
-            // $event->user_id=$request->user_id;
-            // $event->slots=count($request->start_dates);
-            // $event->company_name=$request->company_name;
-            // $event->stake_holder_id=$stake_holder;//Associative Array
-            // $event->save();
-            // $validator=Validator::make($data, [
-            //     'department'=>['required','string','max:180'],
-            //     'title' => ['required', 'string', 'max:180'],
-            //     'description' => ['required', 'string','max:500'],
-            //     'speaker' => ['required', 'string'],
-            //     'type' =>['required'],
-            //     'company_name'=>['required'],
-            //     'certificate' => ['required'],
-            //     'fees' => ['required','int'],
-            //     'stake_holder' => ['required'],
-            //     'start_dates'=>['required'],
-            //     'start_times'=>['required'],
-            //     'end_times'=>['required'],
-            //     'venue_list'=>['required'],
-            // ]);
-                     
-            // if ($validator->fails()) {
-            //     return redirect('/events/create')
-            //                 ->withErrors($validator)
-            //                 ->withInput();                
-            // }
     }
 
     public function fileupload(Request $request)
@@ -860,18 +827,22 @@ public function messages()
             //     }
         $filename= $file->getClientOriginalName();
         $fileext = $file->getClientOriginalExtension();
-        $filename= time(). '.' .$request->title.'.'.$fileext;
+        $filename= time(). '_' .$request->title.'_.'.$fileext;
 
-        $path = $file->storeAs('public', $filename);
+        $path = $file->storeAs('reports', $filename);
+        // $path = 'C:/'.$path;
+        // echo $path;
+        
         // echo request->event_id;
                 // echo $path;
                 // echo $request->title;
         Fileupload::create([
             'filename' => $filename,
+            'filepath' => $path,
             'event_id' => $request->event_id,
         ]);
             $savedfile = Fileupload::latest()->firstOrFail();
-        return redirect('/home')->with('savedfile', $savedfile);
+        return redirect('/home')->with('success', 'Report submitted!');
                
       //Display File Size
     //   echo 'File Size: '.$file->getSize(). ' bytes';
@@ -879,6 +850,39 @@ public function messages()
    
       //Display File Mime Type
     //   echo 'File Mime Type: '.$file->getMimeType();
+
+    }
+
+
+    public function filedownload(Request $request)
+    {
+        // echo $request->event_id;
+        // $file=DB::table('fileuploads')->where('event_id',$request->event_id)->get('filename');
+        $file=Fileupload::where('event_id', $request->event_id)->first();
+        // $file=Fileupload::find($request->event_id);
+        // $file=array($file);
+        // print_r($file);
+        $filen= $file['filename'];
+        $filep=$file['filepath'];
+        $file= storage_path($filep);
+        
+    //    echo $file;
+    //    echo "Hey";
+    //    echo $filen;
+    //    echo "Hey";
+    //    echo $filep;
+        $file= storage_path().'\app\reports\\'.$filen;
+        // echo $file;
+        // return  Storage::disk('ftp')->download($file);
+    //     // $response->headers->set('Content-Type' , 'application/pdf');
+    // $headers = [
+    //           'Content-Type' => 'application/pdf',
+    // ];
+    
+    //         // return Storage::download($file);
+            // return response()->download(storage_path("app/reports/{$filen}"));
+            return response()->download($file);
+
 
     }
     /**
