@@ -9,6 +9,7 @@
 <body>
     <h1>{{$details['title']}}</h1>
     <p>{{$details['body']}}</p><br>
+    {{$details['message']}}
     <p>Thank You.</p>
     
 </body>

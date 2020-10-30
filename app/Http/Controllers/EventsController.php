@@ -540,6 +540,8 @@ public function approval(Request $request){
         $details=[
             'title'=>'Title: Mail From Shithil Shetty',
             'body'=>'Body: This is to inform you that the event request has been approved',
+            'message'=>'E-mail has been sent successfully.',
+            'subject'=>'Your event request has been accepted.',
         ];
 
         \Mail::to($user->email)->send(new SendMail($details));
@@ -871,7 +873,12 @@ public function messages()
     //    echo $filen;
     //    echo "Hey";
     //    echo $filep;
-        $file= storage_path().'\app\reports\\'.$filen;
+        if(file_exists(storage_path().'\app\reports\\'.$filen)){
+            $file= storage_path().'\app\reports\\'.$filen;
+            return response()->download($file);
+        }
+        else{
+            return redirect('/home')->with('error', 'Report not found.');        }    
         // echo $file;
         // return  Storage::disk('ftp')->download($file);
     //     // $response->headers->set('Content-Type' , 'application/pdf');
@@ -881,7 +888,7 @@ public function messages()
     
     //         // return Storage::download($file);
             // return response()->download(storage_path("app/reports/{$filen}"));
-            return response()->download($file);
+            
 
 
     }

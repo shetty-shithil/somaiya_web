@@ -12,9 +12,14 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "huddledigital/zendesk-laravel": "^3.5",
+        "hwi/oauth-bundle": "^1.2",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "laravelcollective/html": "^6.1"
+        "laravelcollective/html": "^6.1",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/httplug-bundle": "^1.19",
+        "s-ichikawa/laravel-sendgrid-driver": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
