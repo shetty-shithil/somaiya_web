@@ -179,16 +179,21 @@ Route::get('/', function (Request $request) {
 
     return view('events.calendar',compact('events','arr1','prev_m','next_m','lw','e','m','n','h','k','d','j','u','s'));
 });
+Route::get('/events/edit','EventsController@edit');
 Route::resource('events','EventsController');
 // Route::get('/events/create', 'EventsController@create');
 // Route::post('/events/create', 'EventsController@store');
 // Route::post('/events','EventsController@store');
+
 Route::post('/approval','EventsController@approval');
 Route::post('/comments','EventsController@comments');
-Route::post('/events/edit','EventsController@edit');
+
+// Route::get('/events/edit','EventsController@edit');
+// Route::get('/events/update','EventsController@update');
 Route::post('/events/update','EventsController@update');
 Route::post('/events/fileupload','EventsController@fileupload');
 Route::post('/events/download','EventsController@filedownload');
+Route::post('/events/search','EventsController@search');
 
 Auth::routes(['verify'=>true]);
 Route::get('register', 'UsersController@showRegistrationForm')->name('register');

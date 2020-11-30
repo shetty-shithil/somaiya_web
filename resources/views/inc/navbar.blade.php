@@ -55,12 +55,15 @@
             <li>
                 <div class="user-view">
                     {{-- <a href="#name"><span class="white-text name">   {{ auth()->user()->name }} </span></a> --}}
-                    <a href="#designation"><span class="white-text designation"><i class="fas fa-map-marker-alt"></i>Designation</span></a>
+                    @if(Auth::user())
+                    <a href="#designation"><span class="white-text designation"><i class="fas fa-map-marker-alt"></i>{{Auth::user()->name}}</span></a>
+                    @endif
                 </div>
             </li>
             <li><a href="{{ route('login') }}">MY EVENTS</a></li>
             <li><a href="#">PROFILE</a></li>
         </ul>
+        @if(Auth::user())
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
@@ -72,6 +75,10 @@
                 @csrf
             </form>
         </div>
+        @endif
+        @if(!Auth::user())
+        <li><a href="{{ route('login') }}">LOGIN</a></li>
+        @endif
         {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -123,7 +130,18 @@
    <script src="{{asset('js/event.js')}}"></script>
    <script src="{{asset('js/abc.js')}}"></script>
    <script src="{{asset('js/extra.js')}}"></script>
-   
+   <script>
+       $(document).ready(function () {
+    $('#slide-out').sidenav({
+        edge: 'right'
+    });
+});
+$(document).ready(function () {
+    $('#mobile-demo.sidenav').sidenav({
+        edge: 'left'
+    });
+});
+   </script>
 
 </body>
 

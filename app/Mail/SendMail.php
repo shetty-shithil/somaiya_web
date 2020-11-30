@@ -31,9 +31,12 @@ class SendMail extends Mailable
      */
     public function build()
     {
+        
         // return $this->subject('Approval Mail.')
         //             ->view('emails.sendmail');
-                    $address = 'shithil.s@somaiya.edu';
+                //Change email id and api key as per single sender created.
+
+                    $address = 'shithilshetty05@gmail.com';
                     // $subject = 'Approval Mail.';
                     $name = 'Shithil!';
                     $message= 'Your event has been approved';

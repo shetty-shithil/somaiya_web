@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <!-- <div class="card">
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
@@ -46,7 +46,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -76,86 +76,41 @@
                         <span class="bold">Stakeholder : </span><span id="stakeholder_on_modal"></span>
                     </div>
                 </div>
-                <form action="/events/edit" method="POST">
-                    @csrf
-                    <input type="hidden" id="send_on_modal" name="event_id">     
-                    <button class="btn col m4 s5  mar-15 btn-modify modal-close">Modify</button>
-                </form>
-                <form action="/events/download" enctype="multipart/form-data" method="POST">
-                    @csrf
-                    <input type="hidden" id="download_on_modal" name="event_id">     
-                    <button class="btn col m4 s5  mar-15 btn-modify modal-close">Download Report</button>
-                </form>
-                <form action="/events/fileupload" enctype="multipart/form-data" method="POST">
-                    @csrf
-                    <input type="hidden" id="file_on_modal" name="event_id"> 
-                    <input type="hidden" id="title" name="title"> 
-                    <label for="uploadedfile">Upload Report</label>
-                    <input type="file" class="form-control-file" id="uploadedfile" name="uploadedfile">     
-                    <div class="form-control-group"><button class="btn btn-success">Submit</button></div>
-                </form>
+                <div class="row">
+                    {{-- <form action="/events/edit" method="POST"> --}}
+                        {{-- @csrf --}}
+                        {{-- <input type="hidden" id="send_on_modal" name="event_id">      --}}
+                        <a  class="btn col m4 s5  mar-15 btn-modify modal-close" id="event-id">Modify</a>
+                    {{-- </form> --}}
+                </div>
+                <div class="row">
+                    <form action="/events/download" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <input type="hidden" id="download_on_modal" name="event_id">     
+                        <button class="btn col m4 s5  mar-15 btn-download modal-close">Download Report</button>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <form action="/events/fileupload" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <input type="hidden" id="file_on_modal" name="event_id"> 
+                        <input type="hidden" id="title" name="title"> 
+                            <label class="bold" for="uploadedfile">Upload Report : </label>
+                            <input type="file" class="form-control-file" id="uploadedfile" name="uploadedfile">  
+                        <div class="form-control-group"><button class="btn btn-success btn-submit">Submit</button></div>
+                    </form>
+                </div>
             </div>
             <div class="col m4 s12">
                 <h5 class="bold top-0">Comments</h5>
-                <div class="view_comments">
-                    <div class="comment_1">
-                        <span class="faculty">HOD: </span> Please change the date
-                    </div>
-                    <div class="comment_2">
-                        <span class="faculty">DOA: </span> Please change the time and also change the venue
-                    </div>
-                    <div class="comment_3">
-                        <span class="faculty">PRINCIPAL: </span> Please change the name.
-                    </div>
+                <div id="comments_on_modal">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-{{-- <div id="fullcard_with_comments" class="modal">
-    <div class="modal-content">
-        <div class="row ml-28 m-0">
-            <div class="col m8 s12">
-                <h6 class="bold">Saturday</h6>
-                <h6 class="bold">September 04</h6>
-                <h6 class="bold"> 11:00 - 12:00</h6>
-                <h6 class="bold mt-0">Seminar Details</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam consequuntur sapiente ab vero, expedita facere aspernatur repellat doloremque amet, dolorem quia, similique vel quam maxime alias nam. Ea, cumque officia.</p>
-                <div class="row m-0 p-0">
-                    <div class="col m6 pr-20 s12">
-                        <span class="bold">Venue :</span> IT Building
-                    </div>
-                    <div>
-                        <span class="bold">Speaker :</span> XYZ
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col m6 pr-20 s12">
-                        <span class="bold">Organiser :</span> XYZ Department
-                    </div>
-                    <div>
-                        <span class="bold">Stakeholder :</span> Teachers
-                    </div>
-                </div>
-            </div>
-            <div class="col m4 s12">
-                <h5 class="bold top-0">Comments</h5>
-                <div class="view_comments">
-                    <div class="comment_1">
-                        <span class="faculty">HOD: </span> Please change the date
-                    </div>
-                    <div class="comment_2">
-                        <span class="faculty">DOA: </span> Please change the time and also change the venue
-                    </div>
-                    <div class="comment_3">
-                        <span class="faculty">PRINCIPAL: </span> Please change the name.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 <div id="MyEvents">
     <div class="container" style="padding: 50px 0;">
         <!-- Events -->
@@ -163,7 +118,8 @@
       @foreach ($arr as $evs)
             @if ($evs->event_id==$uv->id)
                 <div class="card-head">
-                    <div class="row card_to_update_modal" id="{{$evs->id}}"><a class="modal-trigger" href="#fullcard_with_comments">
+                    <div class="row card_to_update_modal" id="{{$evs->id}}">
+                        <a class="modal-trigger" href="#fullcard_with_comments">
                         <div class="col s12 m-0 p-0 offset-m2">
                             <div class="card-panel black-text event m-0">
                                 <div class="valign-wrapper">
@@ -186,7 +142,8 @@
                                                         @if ($venue->id==$evs->venue_id)
                                                 <span class="bold-sm">Venue :</span><span id="venue_on_card{{$evs->id}}">{{$venue->name}}  </span>  
                                                         @endif
-                                                   @endforeach                                                     </div>
+                                                   @endforeach                                                     
+                                                   </div>
                                                     <div class="col m6 pad-20">
                                                         <span class="bold-sm">Speaker : </span> <span id="speaker_on_card{{$evs->id}}">{{$uv->speakers}}</span>
                                                     </div>
@@ -195,11 +152,22 @@
                                                     </div>
                                                     <div class="col m6 s12 pad-20">
                                                         @foreach ($stake_holders as $stkh)
-                                                        @if ($stkh->id==$uv->stake_holder_id)
-                                                        <span class="bold-sm">Stakeholder : </span><span id="stakeholder_on_card{{$evs->id}}">{{$stkh->name}}</span>
+                                                            @if ($stkh->id==$uv->stake_holder_id)
+                                                                <span class="bold-sm">Stakeholder : </span><span id="stakeholder_on_card{{$evs->id}}">{{$stkh->name}}</span>
+                                                            @endif
+                                                        @endforeach                                                     
+                                                    </div>
+                                                    
+                                                    <!-- {{$key = 0}} -->
+                                                    <div id="comments_on_card{{$evs->id}}"> 
+                                                    @foreach($comm as $c)
+                                                        @if($c->event_id==$evs->event_id)
+                                                            <div class="comment">
+                                                                <span id="comment_user_{{$key}}">{{$c->user}} : </span>
+                                                                <span id="comment_detail_{{$key++}}">{{$c->comments}}</span>        
+                                                            </div>
                                                         @endif
-                                                        @endforeach 
-                                                       
+                                                    @endforeach
                                                     </div>
                                                 </div>
                                             </div>
@@ -209,6 +177,77 @@
                                 </div>
                             </div>
                         </div>
+                        @foreach($u_per as $u_p)
+                        @if($u_p->event_id==$uv->id)
+                               
+                                <div class="flags">
+                                    @if($u_p->permit_p==1)
+                                        <div class="user">
+                                            <span class="status_indicator approved"></span><span id="p_flag" class="userName">Principal</span>
+                                        </div>
+                                    @endif    
+                                    @if($u_p->permit_p==0)    
+                                        <div class="user">
+                                            <span class="status_indicator pending"></span><span id="vcp_flag" class="userName">Principal</span>
+                                        </div>
+                                    @endif
+                                     @if($u_p->permit_p==2)    
+                                        <div class="user">
+                                            <span class="status_indicator rejected"></span><span id="doa_flag" class="userName">Principal</span>
+                                        </div>
+                                    @endif  
+                                    @if($u_p->permit_p==3)    
+                                        <div class="user">
+                                            <span class="status_indicator modify"></span><span id="doa_flag" class="userName">Principal</span>
+                                        </div>
+                                    @endif    
+                                
+
+                               
+                                    @if($u_p->permit_vp==1)
+                                    <div class="user">
+                                        <span class="status_indicator approved"></span><span id="p_flag" class="userName">Vice Principal</span>
+                                    </div>
+                                @endif    
+                                @if($u_p->permit_vp==0)    
+                                    <div class="user">
+                                        <span class="status_indicator pending"></span><span id="vcp_flag" class="userName">Vice Principal</span>
+                                    </div>
+                                @endif
+                                 @if($u_p->permit_vp==2)    
+                                    <div class="user">
+                                        <span class="status_indicator rejected"></span><span id="doa_flag" class="userName">Vice Principal</span>
+                                    </div>
+                                @endif
+                                @if($u_p->permit_vp==3)    
+                                <div class="user">
+                                    <span class="status_indicator modify"></span><span id="doa_flag" class="userName">Vice Principal</span>
+                                </div>
+                            @endif    
+                       
+                                    @if($u_p->permit_doa==1)
+                                    <div class="user">
+                                        <span class="status_indicator approved"></span><span id="p_flag" class="userName">Dean of Academics</span>
+                                    </div>
+                                @endif    
+                                @if($u_p->permit_doa==0)    
+                                    <div class="user">
+                                        <span class="status_indicator pending"></span><span id="vcp_flag" class="userName">Dean of Academics</span>
+                                    </div>
+                                @endif
+                                 @if($u_p->permit_doa==2)    
+                                    <div class="user">
+                                        <span class="status_indicator rejected"></span><span id="doa_flag" class="userName">Dean of Academics</span>
+                                    </div>
+                                @endif  
+                                @if($u_p->permit_doa==3)    
+                                <div class="user">
+                                    <span class="status_indicator modify"></span><span id="doa_flag" class="userName">Dean of Academics</span>
+                                </div>
+                            @endif      
+                            </div>
+                          @endif      
+                        @endforeach        
                         </a>
                     </div>
                 </div>
@@ -296,6 +335,19 @@
 <!-- JQuery -->
 
    <!-- <script src="../js/jquery.min.js"></script>-->
+   <script>
+$(document).ready(function () {
+    $('#slide-out').sidenav({
+        edge: 'right'
+    });
+});
+$(document).ready(function () {
+    $('#mobile-demo.sidenav').sidenav({
+        edge: 'left'
+    });
+});
+    </script>
+
 
    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
     <!-- Compiled and minified JavaScript -->
@@ -309,8 +361,6 @@
    <script src="{{asset('js/abc.js')}}"></script>
    <script src="{{asset('js/extra.js')}}"></script>
    <script>
-   
-
     $('.card_to_update_modal').click(function() {
             var id_no = this.id;
             document.getElementById("day_on_modal").innerHTML = document.getElementById("day_on_card" + id_no).innerHTML;
@@ -322,10 +372,18 @@
             document.getElementById("speaker_on_modal").innerHTML = document.getElementById("speaker_on_card" + id_no).innerHTML;
             document.getElementById("organiser_on_modal").innerHTML = document.getElementById("organiser_on_card" + id_no).innerHTML;
             document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
-            document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
+            // document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
             document.getElementById("file_on_modal").value = $("#id_on_card" + id_no).val();
             document.getElementById("download_on_modal").value = $("#id_on_card" + id_no).val();
             document.getElementById("title").value = document.getElementById("title_on_card" + id_no).innerHTML;
+            var a= document.getElementById("event-id");
+            // a.href="/events/edit?event_id="+id_no; //Event-Schedules Id
+            //Event Id
+            a.href="/events/edit?event_id="+$("#id_on_card" + id_no).val();
+
+            var comments_on_card = document.getElementById("comments_on_card" + id_no).innerHTML;
+            var comments_on_modal = document.getElementById("comments_on_modal");
+            comments_on_modal.innerHTML = comments_on_card;
         });
 
         $(document).ready(function() {

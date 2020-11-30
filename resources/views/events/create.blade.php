@@ -13,7 +13,7 @@
                         <div class="input-field col s12">
                             {{-- <input id="department" type="text" class="validate"> --}}
                             <label for="department">Enter Department</label>
-                            {{Form::text('department', '', ['class'=>"form-control",'id'=>'department'])}}        
+                            {{Form::text('department', '', ['class'=>"form-control",'id'=>'department','required' => 'required'])}}        
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('department')}}</div>
                             
                         </div>
@@ -23,7 +23,7 @@
                     <div class="title">
                         <div class="input-field col s12">
                             {{-- <input id="title" type="text" class="validate"> --}}
-                            {{Form::text('title', '',['class'=>'validate','id'=>'title'])}}        
+                            {{Form::text('title', '',['class'=>'validate','id'=>'title','required' => 'required'])}}        
                             <label for="title">Enter Event Title</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('title')}}</div>
 
@@ -34,7 +34,7 @@
                     <div class="description">
                         <div class="input-field col s12">
                             {{-- <textarea id="description" class="materialize-textarea"></textarea> --}}
-                            {{Form::textarea('description', '',['class'=>'materialize-textarea','id'=>'description'])}}
+                            {{Form::textarea('description', '',['class'=>'materialize-textarea','id'=>'description','required' => 'required'])}}
                             <label for="description">Enter Event Description</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('description')}}</div>
 
@@ -291,13 +291,27 @@ $('select:not(.browser-default)').on('change', function (e) {
     console.log(e.target.value);
 });
 
+// function warning() {
+//     if ($(this).val() == "") {
+//         var parent = $(this).parent().parent();
+//         var parent_classname = parent.attr('class');
+//         if (parent.hasClass('department') || parent.hasClass('title') || parent.hasClass('description') || parent.hasClass('event_days'))
+//             parent.append(`<label class="warning_message col s12 ${parent_classname} ">Please add ${parent_classname}.</label>`);
+//         else if (parent.hasClass('fees') || parent.hasClass('stakeholders') || parent.hasClass('venue') || parent.hasClass('speaker') || parent.hasClass('certificate')) {
+//             parent.parent().append(`<label class="warning_message col s12 ${parent_classname} ">Please add ${parent_classname}.</label>`);
+
+//         }
+
+//     }
+// }
 function warning() {
     if ($(this).val() == "") {
         var parent = $(this).parent().parent();
-        var parent_classname = parent.attr('class');
-        if (parent.hasClass('department') || parent.hasClass('title') || parent.hasClass('description') || parent.hasClass('event_days'))
+        var parent_classname = parent.attr('class');    
+
+        if ((parent.hasClass('department') || parent.hasClass('title') || parent.hasClass('description') || parent.hasClass('event_days')) && (parent.children('label.warning_message').length <= 0))
             parent.append(`<label class="warning_message col s12 ${parent_classname} ">Please add ${parent_classname}.</label>`);
-        else if (parent.hasClass('fees') || parent.hasClass('stakeholders') || parent.hasClass('venue') || parent.hasClass('speaker') || parent.hasClass('certificate')) {
+        else if ((parent.hasClass('fees') || parent.hasClass('stakeholders') || parent.hasClass('company_name') || parent.hasClass('speaker') || parent.hasClass('certificate')) && (parent.parent().children(`label.warning_message.${parent_classname}`).length <= 0)) {
             parent.parent().append(`<label class="warning_message col s12 ${parent_classname} ">Please add ${parent_classname}.</label>`);
 
         }
@@ -308,7 +322,7 @@ function warning() {
 function remove_warning() {
     if ($(this).val() != "") {
         var parent = $(this).parent();
-        if ($(this).is('#fees') || $(this).is('#stakeholders') || $(this).is('#venue') || $(this).is('#speaker') || $(this).is('#certificate')) {
+        if ($(this).is('#fees') || $(this).is('#stakeholders') || $(this).is('#company_name') || $(this).is('#speaker') || $(this).is('#certificate')) {
             var targetclass = parent.parent().attr('class');
             var targetelement = parent.parent().siblings(`label.${targetclass}`);
             console.log(targetelement);
@@ -792,3 +806,11 @@ function update_venueUI(data) {
         // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var params  = {name:name, department: department, description: description, fees:fees, speaker:speaker, no_of_days:no_of_days, total_rows_of_dates:total_rows_of_dates, start_dates:start_dates, end_dates:end_dates, start_times:start_times, end_times:end_times};
         xhr.send(JSON.stringify(params)); --}}
+
+
+
+
+        {{-- JS
+            
+            
+            --}}

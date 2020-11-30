@@ -11,6 +11,7 @@ use App\Event_Permissions;
 use App\User;
 use App\event_schedule;
 use App\Comments;
+use DB;
 
 class HomeController extends Controller
 {
@@ -37,8 +38,11 @@ class HomeController extends Controller
 
         $z=0;
         $arr=[];
-        $events= Events::all();
+        // $events= Events::all();
+        // $eve = new Events;
+        $events=Events::select($user_id);
         $event_schedules= event_schedule::all();
+        $comm= Comments::all();
         foreach($event_schedules as $evs)
         {   
             
@@ -63,9 +67,15 @@ class HomeController extends Controller
         $stake_holders= stake_holders::all();
         $venues= Venue::all();
         $u_events=$user->events;
-        $u_per=Event_Permissions::all();
+        $u_per=[];
+        // foreach($events as $eve){
+            $u_per=Event_Permissions::all();
+        //     $u_p= DB::table('event__permissions')->where([['event_id','=',$eve->id]])->get();
+        //     $u_per=array_merge($u_per,array($u_p));
+        // }
+            // $u_per=Event_Permissions::all();
         // return view('home')->with('events',$user->events);
-        return view('home',compact('events','u_events','u_per','arr','stake_holders','venues'));
+        return view('home',compact('events','u_events','u_per','arr','stake_holders','venues','comm'));
 
     }
 }

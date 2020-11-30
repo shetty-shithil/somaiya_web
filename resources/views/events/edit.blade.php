@@ -13,7 +13,7 @@
                         <div class="input-field col s12">
                             {{-- <input id="department" type="text" class="validate"> --}}
                             <label for="department">Enter Department</label>
-                            {{Form::text('department', $events->department, null, ['class'=>"form-control",'id'=>'department'])}}        
+                            {{Form::text('department', $events->department, ['class'=>"form-control",'id'=>'department','required' => 'required'])}}        
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('department')}}</div>
                             
                         </div>
@@ -23,7 +23,7 @@
                     <div class="title">
                         <div class="input-field col s12">
                             {{-- <input id="title" type="text" class="validate"> --}}
-                            {{Form::text('title', $events->title, null,['class'=>'validate','id'=>'title'])}}        
+                            {{Form::text('title', $events->title, ['class'=>'validate','id'=>'title','required' => 'required'])}}        
                             <label for="title">Enter Event Title</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('title')}}</div>
 
@@ -34,7 +34,7 @@
                     <div class="description">
                         <div class="input-field col s12">
                             {{-- <textarea id="description" class="materialize-textarea"></textarea> --}}
-                            {{Form::textarea('description', $events->description, null,['class'=>'materialize-textarea','id'=>'description'])}}
+                            {{Form::textarea('description', $events->description, ['class'=>'materialize-textarea','id'=>'description','required' => 'required'])}}
                             <label for="description">Enter Event Description</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('description')}}</div>
 
@@ -50,7 +50,7 @@
                                 <option value="2">Option 2</option>
                                 <option value="3">Option 3</option>
                             </select> --}}
-                            {{Form::select('type',$type,$events->type,['class'=>'validate type_of_event','placeholder'=> 'Select'])}}
+                            {{Form::select('type',$type,$events->type,['class'=>'validate type_of_event','placeholder'=> 'Select','required' => 'required'])}}
                             <label>Type Of Event</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('type')}}</div>
 
@@ -65,7 +65,7 @@
                                 <option value="2">Option 2</option>
                                 <option value="3">Option 3</option>
                             </select> --}}
-                            {{Form::select('stake_holder[]',$stake_holder,$events->stake_holder_id,array('multiple'=>true),['class'=>'validate','id'=>'stake_holder','placeholder' => 'Select'])}}
+                            {{Form::select('stake_holder[]',$stake_holder,$events->stake_holder_id,array('multiple'=>true,'required' => 'required'),['class'=>'validate','id'=>'stake_holder','placeholder' => 'Select'])}}
                             <label>Stakeholders</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('stake_holder')}}</div>
                         </div>
@@ -74,7 +74,7 @@
                     <div class="fees">
                         <div class="input-field col s12 m6 l3">
                             {{-- <input id="fees" type="text" class="validate"> --}}
-                            {{Form::text('fees',$events->fees,null,['class'=>'validate','id'=>'fees'])}}        
+                            {{Form::text('fees',$events->fees, ['class'=>'validate','id'=>'fees','required' => 'required'])}}        
                             <label for="fees">Enter Fees</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('fees')}}</div>
 
@@ -85,7 +85,7 @@
                     <div class="company_name">
                        <div class="input-field col s12 m6 l3">
                             {{-- <input id="company_name" type="text" class="validate"> --}}
-                            {{Form::text('company_name', $events->company_name,null,['class'=>'validate','id'=>'company_name'])}}  
+                            {{Form::text('company_name', $events->company_name,['class'=>'validate','id'=>'company_name','required' => 'required'])}}  
                              <label for="company_name">Company Name</label>
                              <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('company_name')}}</div>
  
@@ -99,7 +99,7 @@
                                 <option value="1">Yes</option>
                                 <option value="2">No</option>
                             </select> --}}
-                            {{Form::select('certificate',$certificate,$events->certificate,['class'=>'validate','id'=>'certificate','placeholder' => 'Select'])}}
+                            {{Form::select('certificate',$certificate,$events->certificate,['class'=>'validate','id'=>'certificate','placeholder' => 'Select','required' => 'required'])}}
                             <label>Certificate</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('certificate')}}</div>
 
@@ -109,7 +109,7 @@
                     <div class="speaker">
                         <div class="input-field col s12 m6 l3">
                             {{-- <input id="Speaker" type="text" class="validate"> --}}
-                            {{Form::text('speaker', $events->speakers,null,['class'=>'validate','id'=>'speaker'])}}       
+                            {{Form::text('speaker', $events->speakers,['class'=>'validate','id'=>'speaker','required' => 'required'])}}       
                             <label for="speaker" class="speaker">Speaker</label>
                             <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('speaker')}}</div>
 
@@ -120,28 +120,28 @@
                 <div class="row m-0">
                     <div class="col mycol2"></div>
                     <div class="multipe_venue">
-                        <label class="col s7 m7 l5 p-0">
+                        {{-- <label class="col s7 m7 l5 p-0">
                             <p>Does this event require multiple venue?</p>
-                        </label>
+                        </label> --}}
                         <div class="col s4 m4 l3 p-0">
-                            <div class="yes">
-                                <label>
+                            {{-- <div class="yes">
+                                <label> --}}
                                     {{-- <input id="yes_venue" name="v" value="1" type="radio" /> --}}
                                     {{-- {{Form::radio('group1', '1')}} --}}
                                     
-                                    {{Form::radio('group1','',false,['id'=>'yes_venue'])}}
-                                    <span>YES</span> 
+                                    {{-- {{Form::radio('group1','',false,['id'=>'yes_venue'])}} --}}
+                                    {{-- <span>YES</span>  --}}
                                     {{-- {{Form::label('group1','YES')}} --}}
-                                </label> 
+                                {{-- </label> 
                             </div>
                             <div class="no">
-                                <label>
+                                <label> --}}
                                     {{-- <input id="no_venue"  name="v" value="0" type="radio" /> --}}
                                     {{-- {{Form::radio('group1', '0')}} --}}
-                                    {{Form::radio('group1','',false,['id'=>'no_venue'])}}
-                                    <span>NO</span>
+                                    {{-- {{Form::radio('group1','',false,['id'=>'no_venue'])}} --}}
+                                    {{-- <span>NO</span>
                                 </label>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row m-0">
                     <div class="col mycol2"></div>
-                    <div class="event_days">
+                    {{-- <div class="event_days">
                         <label class="col s7 m7 l4 p-0">
                             <p>Enter the number of days for the event.</p>
                         </label>
@@ -158,14 +158,14 @@
                         <div class="input-field col s4 m4 l3">
                             {{Form::number('no_of_days',count($event_schedules),['min'=>1,'max'=>10,'id'=>'no_of_days'])}} 
                         </div>
-                    </div>
+                    </div> --}}
                     <input type="hidden" id="_token" value="{{ csrf_token() }}">
                     <input type="hidden" id="user_id" name="user_id" value="{{auth()->user()->id}}">
                     <input type="hidden" id="event_id" name="event_id" value="{{$events->id}}">
                 </div>
                 <div class="row m-0">
                     <div class="col mycol2"></div>
-                    <div class="multipe_time">
+                    {{-- <div class="multipe_time">
                         <label class="col s7 m7 l5 p-0">
                             <p>Does this event require multiple time slots?</p>
                         </label>
@@ -174,18 +174,18 @@
                                 <label>
                                     <input id="yes_time" name="t" value="1"type="radio" />
                                     {{-- {{Form::radio('group2','',false,['id'=>'yes_time'])}} --}}
-                                    <span>YES</span>
+                                    {{-- <span>YES</span>
                                 </label>
                             </div>
-                            <div class="no">
+                            {{-- <div class="no">
                                 <label>
                                     <input id="no_time" name="t" value="0" type="radio" /> 
                                     {{-- {{Form::radio('group2','',false,['id'=>'no_time'])}} --}}
-                                    <span>NO</span>
+                                    {{-- <span>NO</span>
                                 </label>
-                            </div>
+                            </div> -
                         </div>
-                    </div>
+                   </div>  --}}
                 </div>
                 {{-- <div class="venue">
                     <div class="input-field col s12 m12 l12">
@@ -195,15 +195,15 @@
                         <label>Venue</label>
                     </div>
                 </div> --}}
+                 <!-- {{$key = 0}} -->
                 @foreach($event_schedules as $evs)
-                <div class="row m-0">
+                <div class="row m-0 datetime_parent_row_{{$key++}}">
                     <div class="date_time">
-                        <div class="col mycol"></div>
                         <div class="input-field col s12 l2">
                             <input name="start_dates[]" id="start_date" value='{{date('M j, Y',strtotime($evs->date))}}' type="text" class="datepicker">
                             <label class="active" for="start_date">Date</label>
                         </div>
-                        <div class="col mycol2"></div>
+                        <div class="col mycol"></div>
                         <div class="input-field col s5 l2">
                             <input name="start_times[]" id="start_time" value='{{date('h:i A',strtotime($evs->start_time))}}' type="text" class="timepicker">
                             <label class="active" for="start_time">Start Time</label>
@@ -215,20 +215,24 @@
                             <input name="end_times[]" id="end_time" value='{{date('h:i A',strtotime($evs->end_time))}}' type="text" class="timepicker">
                             <label class="active"  for="end_time">End Time</label>
                         </div>
+                        <div class="col mycol"></div>
+                        <div class="venue">
+                            <div class="input-field col s12 m2 l2">
+                                <select name="venue_list[]" id="select_venue">
+                                    <option value="" disabled>Select</option>
+                                    @foreach($venue as $v)
+                                        @if($evs->venue_id==$v->id)
+                                        <option value="{{$v->id}}" selected>{{$v->name}}</option>
+                                            @continue
+                                        @endif
+                                        <option value="{{$v->id}}">{{$v->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label>Venue</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-field col s12 m2 l2">
-                        <select name="venue_list[]"  class="venue" id="select_venue">
-                            <option value="" disabled>Select</option>
-                            @foreach($venue as $v)
-                                @if($evs->venue_id==$v->id)
-                                 <option value="{{$v->id}}" selected>{{$v->name}}</option>
-                                    @continue
-                                @endif
-                                <option value="{{$v->id}}">{{$v->name}}</option>
-                            @endforeach
-                        </select>
-                        <label>Venue</label>
-                    </div>
+                    <div class="delete_row"><i class="fas fa-trash-alt"></i></div>
                 </div>
                 @endforeach
                 <div class="error" style="background-color: rgb(141, 7, 7); color: white">{{ $errors->first('venue_list')}}</div>
@@ -241,7 +245,7 @@
                     {{session('errort')}}
                 </div>
                 @endif
-                <div class="add_button" id="">
+                <div class="add_button" id="modify_page">
                     <a class="btn-floating btn-large waves-effect waves-light darkpurple_bg"><i class="material-icons">add</i></a>
                 </div>
            </div>
@@ -367,7 +371,6 @@ function yes_time() {
     no_of_days = $("#no_of_days").val();
     total_rows_of_dates = no_of_days;
     $('.date_time').parent().remove();
-    $('.btn-floating.btn-large').css("display", "block");
     if (venue == true) {
         for (var i = 0; i < no_of_days; i++) {
             singledate_venue(i);
@@ -395,7 +398,6 @@ function no_time() {
         multiple_venue();
     } else if (venue == false) {
         multipledate();
-        $('.btn-floating.btn-large').css("display", "none");
     }
 }
 
@@ -563,8 +565,12 @@ function update_venueUI(data) {
     }
 }
 
+$('.delete_row i').click(function(){
+    var parent = $(this).parent();
+    parent.parent().remove();
+});
 
-            </script>
+</script>
             
         </div>
     </div>

@@ -87,9 +87,10 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-
+    
+    //For system generated e-mail.
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'shithil.s@somaiya.edu'),
+        'address' => env('MAIL_FROM_ADDRESS', 'shithilshetty05@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'SHITHIL SHETTY'),
     ],
 

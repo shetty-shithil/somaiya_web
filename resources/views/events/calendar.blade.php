@@ -58,14 +58,25 @@
                 @endfor
                
                 @for ($i = 0; $i < $d; $i++)
-                    <li class="date" date-day="{{$i+1}}" date-month="{{date("m", strtotime(date("F",$j)))}}" date-year="{{date("Y",$j)}}">
-                        <span class="dateEl">{{$i+1}}
-                            @foreach ($arr1 as $a)
-                                @if ($i+1==date("j",strtotime($a->date))) 
-                                <small>{{$a->event_id}}</small>
-                                @endif
+                    <li class="date popup" id="{{$i+1}}{{date("m", strtotime(date("F",$j)))}}{{date("Y",$j)}}" date-day="{{$i+1}}" date-month="{{date("m", strtotime(date("F",$j)))}}" date-year="{{date("Y",$j)}}">
+                        <div class="popuptext" id="text_of_{{$i+1}}{{date("m", strtotime(date("F",$j)))}}{{date("Y",$j)}}">
+                        <!-- {{$key = 0}} -->
+                            @foreach ($events as $eve)
+                                @foreach ($arr1 as $a)
+                                    @if ($i+1==date("j",strtotime($a->date))) 
+                                    @if($eve->id == $a->event_id)
+                                    <div>{{++$key}} . {{$eve->title}}</div>
+                                    @endif
+                                    @endif
+                                @endforeach
                             @endforeach
+                            </div>
+                        <span id="event_count">
+                            @if ($key != 0)
+                                {{$key}}    
+                            @endif
                         </span>
+                        <span class="da/teEl">{{$i+1}}</span>
                     </li>
                 @endfor
 
@@ -110,5 +121,14 @@ $(document).ready(function () {
         edge: 'left'
     });
 });
-    </script>
+</script>
+
+ <script>
+    $('.popup').click(function(){
+        var id_of_li = this.id;
+        var popup = document.getElementById('text_of_' + id_of_li);
+        console.log(popup);
+        popup.classList.toggle("show");
+    });
+</script>   
 @endsection

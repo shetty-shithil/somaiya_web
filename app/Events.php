@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Events extends Model
 {
@@ -17,5 +18,16 @@ class Events extends Model
     ];
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    // public static function evs(){
+    //     return self::hasMany('App\event_schedule');
+    // }
+    public static function approval(){
+        return DB::table('event__permissions')->where([['permit_p','=','1'],['permit_vp','=','1'],['permit_doa','=','1']])->get();
+    }
+
+    public static function select($user_id){
+        return DB::table('events')->where(['user_id','=',$user_id]);
     }
 }

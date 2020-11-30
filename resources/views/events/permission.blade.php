@@ -1,6 +1,7 @@
 @extends('inc.navbar')
 
 @section('content')
+@include('inc.messages')
 <div id="events">
     <div class="container">
         <!-- Month -->
@@ -76,34 +77,7 @@
                         </div>
                         <div class="col m4 s12">
                             <h5 class="bold top-0">Comments</h5>
-                            <div class="view_comments">
-                                <div class="comment_1">
-                                    <span class="faculty" id="pass_id">Dean Of Academics: </span> 
-                                    {{-- @foreach ($comm as $c)
-                                        @if($c->event_id==$eve->id)
-                                            {{$c->comments_doa}}
-                                        @endif    
-                                    @endforeach --}}
-                                    {{-- <span id="cdoa_on_modal"></span> --}}
-                                </div>
-                                <div class="comment_2">
-                                    <span class="faculty">Vice-Principal: </span> 
-                                    {{-- @foreach ($comm as $c)
-                                        @if($c->event_id==$eve->id)
-                                            {{$c->comments_vp}}
-                                        @endif         
-                                    @endforeach --}}
-                                    <span id="cp_on_modal"></span>
-                                </div>
-                                <div class="comment_3">
-                                    <span class="faculty">PRINCIPAL: </span>
-                                    {{-- @foreach ($comm as $c)
-                                    @if($c->event_id==$eve->id)
-                                        {{$c->comments_p}}
-                                    @endif        
-                                @endforeach --}}
-                                {{-- <span id="cp_on_modal"></span> --}}
-                                </div>
+                            <div id="comments_on_modal">
                             </div>
                         </div>
                     </div>
@@ -169,6 +143,17 @@
                                                     @endif --}}
                                                     
                                                 </div>
+                                                <!-- {{$key = 0}} -->
+                                                <div id="comments_on_card{{$evs->id}}" style="display: none;"> 
+                                                    @foreach($comm as $c)
+                                                    @if($c->event_id==$evs->event_id)
+                                                        <div class="comment">
+                                                            <span id="comment_user_{{$key}}">{{$c->user}} : </span>
+                                                            <span id="comment_detail_{{$key++}}">{{$c->comments}}</span>        
+                                                        </div>
+                                                    @endif
+                                                    @endforeach
+                                                </div>
                                                 
                                                 <div class="submit_form row m-0">
                                                     <button id="myBtn" class="hide-on-med-and-up col s6 offset-s3">Read more</button>
@@ -179,17 +164,7 @@
                                                                 <input type="hidden" id="approval" name="approval" value="1">
                                                             <button class="btn waves-effect waves-light col m2 s6 offset-s3 mar-15" name="aproval" type="submit" value="1">Approve</button>
                                                         </form>
-                                                        @foreach ($comm as $c)
-                                                        @if ($c->event_id==$eve->id)
-                                                            <input type="hidden" id="cp_on_card{{$evs->id}}" name="comm_p" value="{{$c->comments}} ">  
-                                                            {{$c->comments}}
-                                                            {{-- <input type="hidden" id="cvp_on_card{{$evs->id}}" name="comm_vp" value="{{$c->comments_vp}} ">                                                                               
-                                                            <input type="hidden" id="cdoa_on_card{{$evs->id}}" name="comm_doa" value="{{$c->comments_doa}} ">    --}}
-                                                            <input type="hidden" id="id_on_card{{$evs->id}}" name="event_id" value="{{$eve->id}}">
-
-                                                        @endif
-                                                        @endforeach
-                                                    <button data-target="fullcard_with_comments" class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0 btn_modify"  id={{$evs->id}}>Modify</button>
+                                                        <button data-target="fullcard_with_comments" class="btn modal-trigger waves-effect waves-light col m2 s6 offset-s3 grey mar-0 btn_modify"  id={{$evs->id}}>Modify</button>
                                                         <form action="/approval" method="POST">
                                                             @csrf
                                                                 <input type="hidden" id="id_on_card{{$evs->id}}" name="event_id" value="{{$eve->id}}">
@@ -224,6 +199,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="../js/event.js"></script>
 <script>
+    $(document).ready(function() {
+            $('.modal').modal();
+         
+        }); 
+    $(document).ready(function () {
+        $('#slide-out').sidenav({
+            edge: 'right'
+        });
+    });
+    $(document).ready(function () {
+        $('#mobile-demo.sidenav').sidenav({
+            edge: 'left'
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems, {
@@ -241,20 +231,16 @@
             document.getElementById("speaker_on_modal").innerHTML = document.getElementById("speaker_on_card" + id_no).innerHTML;
             document.getElementById("organiser_on_modal").innerHTML = document.getElementById("organiser_on_card" + id_no).innerHTML;
             document.getElementById("stakeholder_on_modal").innerHTML = document.getElementById("stakeholder_on_card" + id_no).innerHTML;
-            document.getElementById("cp_on_modal").innerHTML = $("#cp_on_card"+id_no).val();
+            var comments_on_card = document.getElementById("comments_on_card" + id_no).innerHTML;
+            var comments_on_modal = document.getElementById("comments_on_modal");
+            comments_on_modal.innerHTML = comments_on_card;
+
             // document.getElementById("cvp_on_modal").innerHTML = $("#cvp_on_card"+id_no).val();
             // document.getElementById("cdoa_on_modal").innerHTML = $("#cdoa_on_card"+id_no).val();
             document.getElementById("send_on_modal").value = $("#id_on_card" + id_no).val();
 
         });
     });
-
-    $(document).ready(function() {
-            $('.modal').modal();
-         
-        });
-
-
 
 </script>
 @endsection
